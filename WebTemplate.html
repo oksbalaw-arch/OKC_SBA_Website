@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Club Template — Student Bar Association</title>
+  <meta name="description" content="Template page for student organizations to create their club sites." />
+  <link rel="stylesheet" href="../styles.css" />
+  <!-- favicon should point one level up from clubs/ -->
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <style>
+    /* Page-local helpers (uses vars from styles.css) */
+    .shell { max-width: var(--maxw); margin-inline: auto; padding: 1rem; }
+    .club-banner {
+      margin: .5rem 0 1rem;
+      border-radius: 14px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      height: 200px;
+      background: radial-gradient(900px 300px at 50% -100px, #1c2027 0%, #0f1115 60%);
+      outline: 1px solid rgba(255,255,255,.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.04);
+      color: white; /* banner text in white */
+    }
+    .club-banner h1 { margin: 0; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; }
+    .layout { display: grid; grid-template-columns: clamp(200px, 22vw, 280px) 1fr; gap: 1rem; align-items: start; }
+    .sidebar .card { padding: 0; }
+    .sidebar h2 { margin: 0; padding: .9rem 1rem; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 1rem; letter-spacing: .4px; color: var(--muted); text-transform: uppercase; }
+    .nav { list-style: none; margin: 0; padding: .6rem; display: grid; gap: .35rem; }
+    .nav a { display: block; text-decoration: none; color: var(--link); border: 1px solid rgba(255,255,255,.06); border-radius: .6rem; padding: .55rem .7rem; background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); }
+    .nav a:hover { border-color: var(--ring); background: rgba(255,255,255,.045); }
+    .content .card { min-height: 320px; }
+    .muted { color: var(--muted); }
+    code { background: rgba(255,255,255,.06); padding: .08rem .3rem; border-radius: .3rem; }
+    .btns { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.6rem; }
+    .btn {
+      display:inline-block; text-decoration:none; color:var(--link);
+      border:1px solid rgba(255,255,255,.14); border-radius:10px;
+      padding:.55rem .8rem; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .btn:hover { border-color: var(--ring); background: rgba(255,255,255,.06); }
+    pre.prompt {
+      white-space: pre-wrap; background: rgba(255,255,255,.05);
+      padding: 1rem; border-radius: 8px; font-size: .9rem; line-height: 1.45; overflow: auto;
+    }
+    @media (max-width: 900px){ .layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main class="shell" aria-label="Club template page">
+    <!-- Top banner with text -->
+    <div class="club-banner">
+      <h1>Template</h1>
+    </div>
+
+    <!-- Sidebar + main content -->
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="card">
+          <h2>Club Pages</h2>
+          <ul class="nav" role="list">
+            <li><a href="schedule.html" data-section="schedule">Schedule</a></li>
+            <li><a href="documents.html" data-section="documents">Documents</a></li>
+            <li><a href="constitution.html" data-section="constitution">Constitution</a></li>
+            <li><a href="placeholder.html" data-section="placeholder">Placeholder</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <section class="content">
+        <div class="card" id="content">
+          <h1>How to Use This Template</h1>
+          <p class="muted">Follow these naming conventions so your links “just work” without extra setup:</p>
+          <ol class="muted">
+            <li>Create a folder for your club under <code>/clubs/your-club-slug/</code>
+              <ul>
+                <li>Example: <code>/clubs/moot-court/</code> or <code>/clubs/ai-in-law/</code></li>
+              </ul>
+            </li>
+            <li>Copy this file as <code>index.html</code> into your club’s folder.
+              <ul>
+                <li>Example: <code>/clubs/ai-in-law/index.html</code></li>
+              </ul>
+            </li>
+            <li>Create the four pages your sidebar links point to:
+              <ul>
+                <li><code>schedule.html</code> — upcoming meetings, events, deadlines</li>
+                <li><code>documents.html</code> — PDFs, forms, and other club files</li>
+                <li><code>constitution.html</code> — your club’s governing document</li>
+                <li><code>placeholder.html</code> — anything else (you can rename this link later)</li>
+              </ul>
+            </li>
+            <li>Reference the shared styles so your page matches the SBA site:
+              <ul>
+                <li>At the top of each page: <code>&lt;link rel="stylesheet" href="../styles.css" /&gt;</code></li>
+                <li>Favicon (optional, recommended): <code>&lt;link rel="icon" type="image/png" href="../favicon.png" /&gt;</code></li>
+              </ul>
+            </li>
+            <li>Optional: Add a banner image named <code>banner.png</code> in your club folder and replace the top banner with
+              <code>&lt;img src="banner.png" alt="Club banner" /&gt;</code>
+            </li>
+          </ol>
+
+          <h2>Linking from the SBA Landing Page</h2>
+          <p class="muted">
+            On the SBA landing page, your club’s link should point to <code>/clubs/your-club-slug/</code>.
+            For example: <code>&lt;a href="clubs/ai-in-law/"&gt;AI in Law Club&lt;/a&gt;</code>
+            (the browser will automatically load your <code>index.html</code> inside that folder).
+          </p>
+        </div>
+
+        <!-- NEW: Download buttons -->
+        <div class="card" style="margin-top:1rem;">
+          <h2>Download the Template Files</h2>
+          <p class="muted">Click a button to download the starter file. If your browser opens it instead of downloading, right-click and choose <em>Save link as…</em></p>
+          <div class="btns">
+            <a class="btn" href="index.html" download="index.html">Download: index.html (main template)</a>
+            <a class="btn" href="schedule.html" download="schedule.html">Download: schedule.html</a>
+            <a class="btn" href="documents.html" download="documents.html">Download: documents.html</a>
+            <a class="btn" href="constitution.html" download="constitution.html">Download: constitution.html</a>
+            <a class="btn" href="placeholder.html" download="placeholder.html">Download: placeholder.html</a>
+          </div>
+        </div>
+
+        <!-- NEW: ChatGPT prompt -->
+        <div class="card" style="margin-top:1rem;">
+          <h2>Use This Prompt in ChatGPT</h2>
+          <p class="muted">Upload the template files into chatGPT. Copy the prompt below into ChatGPT. Replace the placeholders (like <code>[CLUB NAME]</code>, <code>[PAGE TITLE]</code>, and <code>[CONTENT]</code>). ChatGPT will return a complete page that matches our SBA style.</p>
+          <pre class="prompt">
+You are a web assistant. Generate a valid HTML5 page that uses this shared stylesheet and favicon:
+
+<link rel="stylesheet" href="../styles.css" />
+<link rel="icon" type="image/png" href="../favicon.png" />
+
+The page must follow this layout:
+- A top banner styled like the `.club-banner` used on our site. The banner should show the page title in white.
+- A two-column layout (`.layout`): a left sidebar with these links, and a main content card to the right.
+  Sidebar links:
+    • Schedule  → schedule.html
+    • Documents → documents.html
+    • Constitution → constitution.html
+    • Placeholder → placeholder.html
+- The main content must be inside a `.card` with an H1 title and body content.
+
+Inputs to apply:
+CLUB NAME: [CLUB NAME]
+PAGE TITLE: [PAGE TITLE]
+CONTENT: [CONTENT HTML OR PARAGRAPHS]
+
+File location rules:
+- This page will live inside /clubs/[club-slug]/ so use relative paths:
+  • stylesheet → ../styles.css
+  • favicon    → ../favicon.png
+  • sidebar hrefs as listed above
+
+Return only the final HTML (no explanations).
+          </pre>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="copy">© <span id="y"></span> Student Bar Association</div>
+      <div class="contacts">
+        <a href="mailto:sba@example.edu" aria-label="Email SBA">Email</a>
+        <a href="#" aria-label="SBA Discord">Discord</a>
+        <a href="#" aria-label="SBA Instagram">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // current year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // In-page previews still work
+    const previews = {
+      schedule: { title: "Schedule", body: "List meetings, events, try-outs, deadlines. Consider including a simple table or embedded calendar." },
+      documents: { title: "Documents", body: "Link PDFs and files stored in your club folder (e.g., /clubs/your-club-slug/docs/filename.pdf)." },
+      constitution:{ title:"Constitution", body:"Paste or link your club’s constitution. PDFs can open in a new tab or be downloadable." },
+      placeholder: { title:"Placeholder", body:"Use this as a scratch page for anything: announcements, officer bios, photos, or recruiting info." }
+    };
+
+    document.querySelectorAll('.nav a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const key = a.dataset.section;
+        if (!key || !previews[key]) return; // allow normal navigation if JS is later removed
+        e.preventDefault();
+        const c = document.getElementById('content');
+        c.innerHTML = `
+          <h1>${previews[key].title}</h1>
+          <p class="muted">${previews[key].body}</p>
+          <p class="muted">A full <strong>${previews[key].title}</strong> page lives at <code>${a.getAttribute('href')}</code>. Create that file when you’re ready.</p>
+        `;
+        history.replaceState(null, "", "#" + key);
+      });
+    });
+
+    // Load preview from hash if present (e.g., WebTemplate.html#documents)
+    const hash = location.hash.replace("#", "");
+    if (hash && previews[hash]) {
+      const link = document.querySelector(`.nav a[data-section="${hash}"]`);
+      if (link) link.click();
+    }
+  </script>
+</body>
+</html>

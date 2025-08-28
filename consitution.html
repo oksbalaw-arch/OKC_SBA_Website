@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Club Constitution — Template</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>.club-banner{margin:1rem 0;display:grid;place-items:center;height:160px;background:radial-gradient(800px 300px at 50% -100px,#1c2027 0%,#0f1115 60%);border-radius:14px;outline:1px solid rgba(255,255,255,.04);box-shadow:0 10px 30px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.04);} .club-banner h1{margin:0;text-transform:uppercase;font-weight:800;}</style>
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+  <main class="container">
+    <div class="club-banner"><h1>Constitution</h1></div>
+    <div class="card">
+      <h2>Club Constitution</h2>
+      <p class="muted">Paste your constitution here or link to a PDF.</p>
+      <pre class="muted">Article I — Name
+Article II — Purpose
+Article III — Membership
+...</pre>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="copy">© <span id="y"></span> Student Bar Association</div>
+    </div>
+  </footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>

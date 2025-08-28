@@ -5,12 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Student Bar Association — Landing</title>
   <meta name="description" content="Student Bar Association landing page for clubs, events, and resources." />
-  <link rel="icon" href="data:," />
+  <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Small targeted fixes/overrides -->
+  <style>
+    /* gold utility */
+    .gold { color: #d4af37 !important; }
+
+    /* make grid fill height for proper centering/scroll math */
+    .sba-grid { align-items: stretch !important; /* full-height columns */ }
+
+    /* LEFT column: list grows; template link stays visible above footer */
+    :root { --footerh: 56px; } /* matches your fixed footer height */
+    .sba-grid { padding-bottom: var(--footerh); } /* prevent footer overlap */
+
+    .clubs.left {
+      display: flex;
+      flex-direction: column;
+      align-self: stretch;
+      min-height: 0;
+    }
+    .clubs.left > .club-list {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+    }
+
+    /* template link pinned near bottom of column, above the footer */
+    .template-link {
+      position: sticky;
+      bottom: calc(.5rem + var(--footerh)); /* sit above the fixed footer */
+      z-index: 2;
+      margin-top: 0.75rem;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 10px;
+      padding: .5rem .7rem;
+    }
+    .template-link a {
+      color: #d4af37; /* gold */
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .template-link a:hover { text-decoration: underline; }
+
+    /* RIGHT column: keep within viewport; scroll only if necessary */
+    .clubs.right { align-self: stretch; min-height: 0; display: flex; }
+    .clubs.right > .club-list { flex: 1 1 auto; min-height: 0; overflow: auto; }
+
+    /* CENTER: vertically center the title + banner */
+    .center-stage {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;  /* vertical center */
+      align-items: center;
+    }
+    .sba-title { margin: 0 0 .5rem; text-align: center; }
+    .sba-title a { color: #d4af37; text-decoration: none; }
+    .sba-title a:hover { text-decoration: underline; }
+  </style>
+
 </head>
 <body class="no-scroll-desktop">
   <main class="sba-grid" aria-label="SBA landing">
-    <!-- Left column: clubs A–F (first half) -->
+    <!-- Left column -->
     <aside class="clubs left" aria-label="Clubs A–F">
       <ul class="club-list" role="list">
         <li><a href="clubs/agricultural-law.html">Agricultural Law Association</a></li>
@@ -31,20 +92,23 @@
         <li><a href="clubs/federalist-society.html">Federalist Society (OCU)</a></li>
         <li><a href="clubs/fite.html">FITE Club</a></li>
       </ul>
+      <!-- Pinned bottom link -->
+      <div class="template-link">
+        <a href="WebTemplate.html">WebTemplate.html</a>
+      </div>
     </aside>
 
-    <!-- Center: SBA title link + banner -->
+    <!-- Center: SBA title + banner -->
     <section class="center-stage">
       <h1 class="sba-title">
-        <a href="sba.html" aria-label="Go to SBA home">Student Bar Association</a>
+        <a href="sba.html" aria-label="Go to SBA home">STUDENT BAR ASSOCIATION</a>
       </h1>
       <div class="hero">
-        <!-- Keep the banner image file next to this HTML -->
         <img src="sba-banner.png" alt="SBA banner" loading="eager" />
       </div>
     </section>
 
-    <!-- Right column: clubs First-Gen–Texas (second half) -->
+    <!-- Right column -->
     <aside class="clubs right" aria-label="Clubs G–Z">
       <ul class="club-list" role="list">
         <li><a href="clubs/first-gen.html">First-Generation Law Student Association</a></li>
@@ -70,9 +134,8 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <div class="copy">© <span id="y"></span> Student Bar Association</div>
+      <div class="copy">© <span id="y"></span> OKSBALaw.com</div>
       <div class="contacts">
-        <!-- Update these links to real targets -->
         <a href="mailto:sba@example.edu" aria-label="Email SBA">Email</a>
         <a href="#" aria-label="SBA Discord">Discord</a>
         <a href="#" aria-label="SBA Instagram">Instagram</a>
