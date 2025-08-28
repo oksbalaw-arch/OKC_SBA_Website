@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SBA — Student Bar Association</title>
+  <meta name="description" content="Student Bar Association hub: constitution, bylaws, schedules, resources, and forms." />
+  <link rel="icon" href="data:," />
+  <!-- Reuse your existing site stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Page-local layout only (builds on your styles.css variables) */
+    .sba-shell {
+      max-width: var(--maxw);
+      margin-inline: auto;
+      padding: 1rem;
+    }
+    .sba-banner {
+      display: grid;
+      place-items: center;
+      margin: .5rem 0 1rem;
+    }
+    .sba-banner img {
+      width: min(960px, 95vw);
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.04);
+      outline: 1px solid rgba(255,255,255,.04);
+    }
+    .sba-layout {
+      display: grid;
+      grid-template-columns: clamp(200px, 22vw, 280px) 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .sba-sidebar .card { padding: 0; }
+    .sba-sidebar h2 {
+      margin: 0;
+      padding: .9rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      font-size: 1rem;
+      letter-spacing: .4px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .sba-nav {
+      list-style: none;
+      margin: 0;
+      padding: .6rem;
+      display: grid;
+      gap: .35rem;
+    }
+    .sba-nav a {
+      display: block;
+      text-decoration: none;
+      color: var(--link);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: .6rem;
+      padding: .55rem .7rem;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+    }
+    .sba-nav a:hover { border-color: var(--ring); background: rgba(255,255,255,.045); }
+    .sba-content .card { min-height: 320px; }
+    .sba-content h1 { margin: .2rem 0 .4rem; }
+    .sba-muted { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      .sba-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="sba-shell" aria-label="SBA site">
+    <!-- Top banner -->
+    <div class="sba-banner">
+      <img src="sba-banner.png" alt="Student Bar Association banner" loading="eager" />
+    </div>
+
+    <!-- Two-column layout: sidebar + main -->
+    <div class="sba-layout">
+      <!-- Left sidebar -->
+      <aside class="sba-sidebar">
+        <div class="card">
+          <h2>SBA Pages</h2>
+          <ul class="sba-nav" role="list">
+            <li><a href="sba-constitution.html" data-section="constitution">SBA Constitution</a></li>
+            <li><a href="sba-bylaws.html" data-section="bylaws">By Laws</a></li>
+            <li><a href="sba-schedule.html" data-section="schedule">Schedule</a></li>
+            <li><a href="sba-resources.html" data-section="resources">Student Resources</a></li>
+            <li><a href="sba-forms.html" data-section="forms">Fillable Forms</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <section class="sba-content">
+        <div class="card" id="content">
+          <h1>Welcome to the Student Bar Association</h1>
+          <p class="sba-muted">
+            Explore our governing documents, upcoming events and schedules, curated resources for students,
+            and convenient fillable forms. Use the links on the left to navigate. We’ll be adding full pages
+            for each section; for now you can preview summaries right here.
+          </p>
+          <ul class="sba-muted">
+            <li><strong>SBA Constitution</strong> — foundational charter and mission.</li>
+            <li><strong>By Laws</strong> — operating procedures and rules.</li>
+            <li><strong>Schedule</strong> — meetings, events, and deadlines.</li>
+            <li><strong>Student Resources</strong> — policies, study help, wellness, and support.</li>
+            <li><strong>Fillable Forms</strong> — funding requests, event approvals, and more.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="copy">© <span id="y"></span> Student Bar Association</div>
+      <div class="contacts">
+        <!-- Update these links to real targets -->
+        <a href="mailto:sba@example.edu" aria-label="Email SBA">Email</a>
+        <a href="#" aria-label="SBA Discord">Discord</a>
+        <a href="#" aria-label="SBA Instagram">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Keep year current
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Optional: in-page preview of sections.
+    // Links still point to the eventual pages (e.g., sba-constitution.html),
+    // but for now we intercept clicks to show placeholder content.
+    const previews = {
+      constitution: {
+        title: "SBA Constitution",
+        body: `Our constitution outlines the SBA's purpose, membership, officers, elections,
+               and duties. It serves as the foundation for governance and accountability.`
+      },
+      bylaws: {
+        title: "SBA By Laws",
+        body: `By laws detail procedures: meetings, quorums, committees, finance, and amendments.
+               They work alongside the Constitution to guide operations.`
+      },
+      schedule: {
+        title: "SBA Schedule",
+        body: `Upcoming meetings, events, and deadlines. Expect recurring general assemblies,
+               committee sessions, and signature events throughout the term.`
+      },
+      resources: {
+        title: "Student Resources",
+        body: `A curated set of links: academic support, wellness, DEI initiatives, pro bono,
+               career development, study tools, and tech help.`
+      },
+      forms: {
+        title: "Fillable Forms",
+        body: `Funding and reimbursement forms, event approvals, space requests, and other
+               administrative documents to streamline student org needs.`
+      }
+    };
+
+    document.querySelectorAll('.sba-nav a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const key = a.dataset.section;
+        if (!key || !previews[key]) return; // let it navigate normally if we later remove this JS
+        e.preventDefault();
+        const c = document.getElementById('content');
+        c.innerHTML = `
+          <h1>${previews[key].title}</h1>
+          <p class="sba-muted">${previews[key].body}</p>
+          <p class="sba-muted">A full page for <strong>${previews[key].title}</strong> is coming soon.
+          You'll be able to view/download documents and details there.</p>
+        `;
+        // Optionally update the URL hash for direct linking:
+        history.replaceState(null, "", "#" + key);
+      });
+    });
+
+    // If the page loads with a hash (e.g., sba.html#schedule), show that section
+    const hash = location.hash.replace("#", "");
+    if (hash && previews[hash]) {
+      const link = document.querySelector(`.sba-nav a[data-section="${hash}"]`);
+      if (link) link.click();
+    }
+  </script>
+</body>
+</html>
