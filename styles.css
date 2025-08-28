@@ -1,0 +1,139 @@
+:root{
+  --bg:#0e0f11;
+  --panel:#121316;
+  --text:#e7e9ee;
+  --muted:#a9b0bd;
+  --link:#dfe3ea;
+  --ring:rgba(255,255,255,.12);
+  --maxw:1400px; /* widen to help fit everything */
+}
+
+/* Base */
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";
+  background:radial-gradient(1200px 800px at 50% -200px,#181a1f 0%,var(--bg) 55%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  letter-spacing:.2px;
+}
+.no-scroll-desktop{overflow:hidden}
+
+/* Layout grid: left list | center stage | right list */
+.sba-grid{
+  height:100vh;
+  max-width:var(--maxw);
+  margin-inline:auto;
+  padding:1rem 1rem 0.5rem;
+  display:grid;
+  grid-template-columns: clamp(180px, 21vw, 280px) 1fr clamp(180px, 21vw, 280px);
+  align-items:center;
+  gap:1rem;
+}
+
+/* Center title + banner */
+.sba-title{
+  margin:.25rem 0 .5rem;
+  text-align:center;
+  font-size:clamp(1.1rem, 1.8vw, 1.6rem);
+  letter-spacing:.6px;
+  font-weight:800;
+  text-transform:uppercase;
+  color:var(--text);
+}
+.sba-title a{
+  color:var(--text);
+  text-decoration:none;
+  border-bottom:1px dashed rgba(255,255,255,.18);
+}
+.sba-title a:hover{
+  border-bottom-color: var(--ring);
+}
+
+.hero{
+  display:grid;
+  place-items:center;
+}
+.hero img{
+  width:min(960px, 52vw);
+  height:auto;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.04);
+  outline:1px solid rgba(255,255,255,.04);
+  /* Keep banner within viewport height budget */
+  max-height: min(48vh, 520px);
+}
+
+/* Club columns */
+.clubs{
+  align-self:stretch; /* let lists stretch full column height */
+  display:flex;
+}
+.club-list{
+  list-style:none;
+  margin:0;
+  padding:0.5rem;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  display:grid;
+  gap:.25rem;
+  align-content:start;
+  /* Fit many items without scrolling on typical laptop screens */
+  font-size:clamp(12px, 1.08vw, 14px);
+  line-height:1.15;
+  overflow:auto;            /* will only scroll if absolutely necessary */
+  scrollbar-width:thin;
+}
+.club-list a{
+  display:block;
+  padding:.35rem .5rem;
+  border-radius:.5rem;
+  color:var(--link);
+  text-decoration:none;
+  border:1px solid transparent;
+}
+.club-list a:hover{
+  border-color:var(--ring);
+  background:rgba(255,255,255,.03);
+}
+
+/* Footer (kept minimal) */
+.site-footer{
+  position:fixed;
+  left:0; right:0; bottom:0;
+  border-top:1px solid rgba(255,255,255,.06);
+  background:#0f1115;
+}
+.site-footer .wrap{
+  max-width:var(--maxw);
+  margin-inline:auto;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  padding:.45rem 1rem;
+}
+.site-footer .copy{color:var(--muted);font-size:.9rem;margin-right:auto}
+.site-footer .contacts{display:flex;gap:.6rem}
+.site-footer .contacts a{
+  color:var(--link);text-decoration:none;border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;padding:.35rem .6rem
+}
+.site-footer .contacts a:hover{border-color:var(--ring);background:rgba(255,255,255,.04)}
+
+/* Small screens: allow normal scrolling and stack */
+@media (max-width: 980px){
+  .no-scroll-desktop{overflow:auto}
+  .sba-grid{
+    grid-template-columns: 1fr;
+    align-items:start;
+    height:auto;
+    gap:1rem;
+    padding-bottom:3.5rem; /* leave room above fixed footer */
+  }
+  .clubs{order:2}
+  .center-stage{order:1}
+  .club-list{font-size:0.95rem; max-height:unset}
+  .hero img{width:95vw; max-height:50vh}
+}

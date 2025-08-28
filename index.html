@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Bar Association — Landing</title>
+  <meta name="description" content="Student Bar Association landing page for clubs, events, and resources." />
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="no-scroll-desktop">
+  <main class="sba-grid" aria-label="SBA landing">
+    <!-- Left column: clubs A–F (first half) -->
+    <aside class="clubs left" aria-label="Clubs A–F">
+      <ul class="club-list" role="list">
+        <li><a href="clubs/agricultural-law.html">Agricultural Law Association</a></li>
+        <li><a href="clubs/ai-in-law.html">AI in Law Club</a></li>
+        <li><a href="clubs/adr.html">Alternative Dispute Resolution Group</a></li>
+        <li><a href="clubs/aba-lsd.html">American Bar Association (Law Student Division)</a></li>
+        <li><a href="clubs/acs.html">American Constitution Society</a></li>
+        <li><a href="clubs/animal-law.html">Animal Law</a></li>
+        <li><a href="clubs/apalsa.html">APALSA</a></li>
+        <li><a href="clubs/blsa.html">Black Law Students Association (John E. Green)</a></li>
+        <li><a href="clubs/catholic-law.html">Catholic Law Student Association</a></li>
+        <li><a href="clubs/cls.html">Christian Legal Society</a></li>
+        <li><a href="clubs/corporate-law.html">Corporate Law Association</a></li>
+        <li><a href="clubs/criminal-law.html">Criminal Law Association</a></li>
+        <li><a href="clubs/energy-law.html">Energy Law Association</a></li>
+        <li><a href="clubs/family-law.html">Family Law Association</a></li>
+        <li><a href="clubs/fba.html">Federal Bar Association (OCU)</a></li>
+        <li><a href="clubs/federalist-society.html">Federalist Society (OCU)</a></li>
+        <li><a href="clubs/fite.html">FITE Club</a></li>
+      </ul>
+    </aside>
+
+    <!-- Center: SBA title link + banner -->
+    <section class="center-stage">
+      <h1 class="sba-title">
+        <a href="sba.html" aria-label="Go to SBA home">Student Bar Association</a>
+      </h1>
+      <div class="hero">
+        <!-- Keep the banner image file next to this HTML -->
+        <img src="sba-banner.png" alt="SBA banner" loading="eager" />
+      </div>
+    </section>
+
+    <!-- Right column: clubs First-Gen–Texas (second half) -->
+    <aside class="clubs right" aria-label="Clubs G–Z">
+      <ul class="club-list" role="list">
+        <li><a href="clubs/first-gen.html">First-Generation Law Student Association</a></li>
+        <li><a href="clubs/health-law.html">Health Law Association</a></li>
+        <li><a href="clubs/hllsa.html">Hispanic Latin Law Student Association</a></li>
+        <li><a href="clubs/ils.html">Immigration Legal Society (ILS)</a></li>
+        <li><a href="clubs/ip-law.html">Intellectual Property Law Association</a></li>
+        <li><a href="clubs/international-law.html">International Law Society</a></li>
+        <li><a href="clubs/murrah.html">Murrah Student Association</a></li>
+        <li><a href="clubs/nalsa.html">NALSA</a></li>
+        <li><a href="clubs/oawl.html">OAWL</a></li>
+        <li><a href="clubs/outlaws.html">OUTLaws</a></li>
+        <li><a href="clubs/phi-alpha-delta.html">Phi Alpha Delta</a></li>
+        <li><a href="clubs/phi-delta-phi.html">Phi Delta Phi (PDP)</a></li>
+        <li><a href="clubs/second-amendment.html">Second Amendment Society (2AS)</a></li>
+        <li><a href="clubs/spela.html">SPELA</a></li>
+        <li><a href="clubs/society-of-litigators.html">Society of Litigators</a></li>
+        <li><a href="clubs/stroup-reform.html">Stroup Society for Reform</a></li>
+        <li><a href="clubs/texas-legal.html">Texas Legal Society</a></li>
+      </ul>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="copy">© <span id="y"></span> Student Bar Association</div>
+      <div class="contacts">
+        <!-- Update these links to real targets -->
+        <a href="mailto:sba@example.edu" aria-label="Email SBA">Email</a>
+        <a href="#" aria-label="SBA Discord">Discord</a>
+        <a href="#" aria-label="SBA Instagram">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
