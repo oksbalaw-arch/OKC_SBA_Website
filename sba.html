@@ -68,6 +68,16 @@
     @media (max-width: 900px) {
       .sba-layout { grid-template-columns: 1fr; }
     }
+
+    /* --- Fix for footer overlap --- */
+    :root { --footerh: 56px; } /* adjust if your footer is taller/shorter */
+    .sba-shell { padding-bottom: calc(var(--footerh) + 12px); }
+
+    /* make sidebar scroll if it’s too tall */
+    .sba-sidebar .card {
+      max-height: calc(100vh - 320px);
+      overflow: auto;
+    }
   </style>
 </head>
 <body>
@@ -84,6 +94,7 @@
         <div class="card">
           <h2>SBA Pages</h2>
           <ul class="sba-nav" role="list">
+            <li><a href="index.html">🏠 Home</a></li>
             <li><a href="sba-constitution.html" data-section="constitution">SBA Constitution</a></li>
             <li><a href="sba-bylaws.html" data-section="bylaws">By Laws</a></li>
             <li><a href="sba-schedule.html" data-section="schedule">Schedule</a></li>
@@ -103,6 +114,7 @@
             for each section; for now you can preview summaries right here.
           </p>
           <ul class="sba-muted">
+            <li><strong>Home</strong></li>
             <li><strong>SBA Constitution</strong> — foundational charter and mission.</li>
             <li><strong>By Laws</strong> — operating procedures and rules.</li>
             <li><strong>Schedule</strong> — meetings, events, and deadlines.</li>
