@@ -149,12 +149,20 @@
       constitution: {
         title: "SBA Constitution",
         body: `Our constitution outlines the SBA's purpose, membership, officers, elections,
-               and duties. It serves as the foundation for governance and accountability.`
+               and duties. It serves as the foundation for governance and accountability.
+
+               <br><br>
+               <a href="SBA Constitution 2021.pdf" download>📄 Download the SBA Constitution (2023, PDF)</a>`
       },
       bylaws: {
         title: "SBA By Laws",
         body: `By laws detail procedures: meetings, quorums, committees, finance, and amendments.
-               They work alongside the Constitution to guide operations.`
+               They work alongside the Constitution to guide operations.
+
+               <br><br>
+               <a href="Bylaws (2023).pdf" download>📄 Download the SBA Bylaws (2023, PDF)</a>
+               <br>
+               <a href="Election Regulations (2023)" download>📄 Download the Election Regulations, PDF)</a>`
       },
       schedule: {
         title: "SBA Schedule",
@@ -182,8 +190,6 @@
         c.innerHTML = `
           <h1>${previews[key].title}</h1>
           <p class="sba-muted">${previews[key].body}</p>
-          <p class="sba-muted">A full page for <strong>${previews[key].title}</strong> is coming soon.
-          You'll be able to view/download documents and details there.</p>
         `;
         // Optionally update the URL hash for direct linking:
         history.replaceState(null, "", "#" + key);
