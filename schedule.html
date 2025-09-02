@@ -3,30 +3,58 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Club Schedule — Template</title>
-  <link rel="stylesheet" href="../styles.css" />
-  <link rel="icon" type="image/png" href="favicon.png">
+  <title>OUTLaws — Schedule</title>
+  <link rel="stylesheet" href="outlawstyles.css" />
+  <link rel="icon" type="image/png" href="../favicon.png" />
   <style>
-    .club-banner { margin:1rem 0; display:grid; place-items:center; height:160px;
-      background:radial-gradient(800px 300px at 50% -100px, #1c2027 0%, #0f1115 60%);
-      border-radius:14px; outline:1px solid rgba(255,255,255,.04);
-      box-shadow:0 10px 30px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.04);
-    }
-    .club-banner h1 { margin:0; text-transform:uppercase; font-weight:800; }
+    /* Page-local helpers */
+    .container{max-width:var(--maxw);margin-inline:auto;padding:1rem}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:.6rem;border-bottom:1px solid var(--ring)}
+    th{text-align:left;color:var(--muted);font-weight:700}
   </style>
 </head>
 <body>
-  <main class="container">
-    <div class="club-banner"><h1>Schedule</h1></div>
-    <div class="card">
-      <h2>Upcoming Events & Meetings</h2>
-      <p class="muted">Add your club’s events, practice sessions, deadlines, or a calendar embed here.</p>
-      <ul>
-        <li>Example: General Meeting — Sept 10, 5:00pm, Room 101</li>
-        <li>Example: Guest Speaker — Oct 3, 12:00pm, Courtroom A</li>
-      </ul>
+  <main class="shell" aria-label="OUTLaws schedule">
+    <!-- Top banner (shared image) -->
+    <div class="banner">
+      <img src="outlawbanner.png" alt="OUTLaws banner" />
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="card">
+          <h2>Club Pages</h2>
+          <ul class="nav" role="list">
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="documents.html">Documents</a></li>
+            <li><a href="constitution.html">Constitution</a></li>
+            <li><a href="profiles.html">Profiles</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <section class="content">
+        <div class="card container">
+          <h1>Upcoming Events</h1>
+          <p class="muted">Times and rooms subject to change—check this page regularly.</p>
+          <table aria-label="OUTLaws events">
+            <thead>
+              <tr><th>Date</th><th>Event</th><th>Location</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Sept 12</td><td>Welcome Mixer (LGBTQ+ & Allies)</td><td>Student Commons</td></tr>
+              <tr><td>Oct 3</td><td>Panel: Inclusive Client Interviewing</td><td>Room 201</td></tr>
+              <tr><td>Nov 7</td><td>Networking Night with LGBTQ+ Attorneys</td><td>Downtown Bar Assoc.</td></tr>
+              <tr><td>Dec 1</td><td>Pro Bono Spotlight: Name & Gender Marker Clinics</td><td>Room 110</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   </main>
+
   <footer class="site-footer">
     <div class="wrap">
       <div class="copy">© <span id="y"></span> Student Bar Association</div>

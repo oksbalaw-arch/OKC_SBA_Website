@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OUTLaws — Officers</title>
+  <!-- Club-specific theme -->
+  <link rel="stylesheet" href="outlawstyles.css" />
+  <!-- Shared favicon -->
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <style>
+    /* Page-local: vertical one-at-a-time scroll */
+    .gallery-card { padding: 0; }
+    .strip-wrap { padding: 1rem; }
+
+    /* Fill available viewport height for nice snapping */
+    .scroll-vertical{
+      height: calc(100vh - 280px); /* leaves room for banner + margins + footer */
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      scroll-snap-type: y mandatory;
+      display: grid;
+      gap: 1rem;
+      align-content: start;
+    }
+
+    /* Each profile fills most of the viewport to show one at a time */
+    .profile{
+      scroll-snap-align: start;
+      min-height: 85vh;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--ring);
+      border-radius: 14px;
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+      padding: 1rem 1rem 0.5rem;
+    }
+
+    .profile figure{
+      margin: 0;
+      display: grid;
+      gap: .5rem;
+      justify-items: center;
+      width: 100%;
+    }
+
+    /* Image width = one-third of viewport width */
+    .profile img{
+      width: 33.333vw;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(0,0,0,.12);
+      outline: 1px solid var(--ring);
+    }
+
+    .profile figcaption{
+      font-weight: 800;
+      letter-spacing: .2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: clamp(.9rem, 1.1vw, 1rem);
+      background: rgba(255,255,255,.6);
+      border: 1px solid var(--ring);
+      border-radius: 10px;
+      padding: .5rem .75rem;
+    }
+
+    /* On small screens use larger image for readability */
+    @media (max-width: 720px){
+      .profile{ min-height: 90vh; }
+      .profile img{ width: 70vw; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell" aria-label="OUTLaws Officers">
+    <!-- Top banner -->
+    <div class="banner">
+      <img src="outlawbanner.png" alt="OUTLaws banner" loading="eager" />
+    </div>
+
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="card">
+          <h2>Club Pages</h2>
+          <ul class="nav" role="list">
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="documents.html">Documents</a></li>
+            <li><a href="constitution.html">Constitution</a></li>
+            <li><a href="profiles.html">Profiles</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <section class="content">
+        <div class="card gallery-card">
+          <div class="strip-wrap">
+            <h1>OUTLaws Officers</h1>
+            <p class="muted">Scroll down to view each officer profile.</p>
+
+            <div class="scroll-vertical" aria-label="Officer profiles">
+              <!-- 1) Kate -->
+              <div class="profile">
+                <figure>
+                  <img src="Kate.png" alt="Kate — President" />
+                  <figcaption>President — Kate</figcaption>
+                </figure>
+              </div>
+
+              <!-- 2) Megan -->
+              <div class="profile">
+                <figure>
+                  <img src="Megan.png" alt="Megan — Vice President" />
+                  <figcaption>Vice President — Megan</figcaption>
+                </figure>
+              </div>
+
+              <!-- 3) Anna (placeholder path as requested) -->
+              <div class="profile">
+                <figure>
+                  <img src="Anna.png" alt="Anna — Social Media Coordinator" />
+                  <figcaption>Social Media Coordinator — Anna</figcaption>
+                </figure>
+              </div>
+
+              <!-- 4) Jacob -->
+              <div class="profile">
+                <figure>
+                  <img src="Jacob.png" alt="Jacob — Secretary" />
+                  <figcaption>Secretary — Jacob</figcaption>
+                </figure>
+              </div>
+
+              <div class="profile">
+                <figure>
+                  <img src="Morgan.png" alt="Morgan — Social Media Coordinator" />
+                  <figcaption>Social Media Coordinator — Morgan</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="copy">© <span id="y"></span> Student Bar Association</div>
+    </div>
+  </footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

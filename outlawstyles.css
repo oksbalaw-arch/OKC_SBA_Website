@@ -1,0 +1,111 @@
+/* ===== OUTLaws theme (inspired by outlawstyleexample.jpg) ===== */
+:root{
+  --text:#101217;            /* dark ink for readability on light gradient */
+  --muted:#2d313a;           /* softer dark text */
+  --link:#101217;
+  --panel:rgba(255,255,255,.82);  /* translucent light cards */
+  --ring:rgba(0,0,0,.12);
+  --maxw:1200px;
+}
+
+/* Page background = vertical gradient (orange→gold→mint→lavender) */
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  color:var(--text);
+  background:
+    linear-gradient(180deg,
+      #ff6a4a 0%,
+      #ffc34d 22%,
+      #bfe68a 55%,
+      #caa9ff 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+
+/* Layout wrappers */
+.shell{max-width:var(--maxw); margin-inline:auto; padding:1rem;}
+.layout{display:grid; grid-template-columns: clamp(200px,22vw,280px) 1fr; gap:1rem; align-items:start}
+@media (max-width: 900px){ .layout{grid-template-columns:1fr} }
+
+/* Banner image centered */
+.banner{
+  display:grid; place-items:center;
+  margin: .75rem 0 1rem;
+}
+.banner img{
+  width:min(1080px, 96vw);
+  height:auto;
+  display:block;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.18);
+  outline: 1px solid rgba(0,0,0,.06);
+}
+
+/* Headings: bold, poster-like */
+h1,h2{margin:0 0 .5rem 0}
+h1{
+  font-size: clamp(1.6rem, 4.5vw, 3rem);
+  font-weight: 900;
+  letter-spacing:.4px;
+  text-transform: uppercase;
+}
+h2{
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  font-weight: 800;
+  letter-spacing:.3px;
+}
+
+/* Card panels */
+.card{
+  background: var(--panel);
+  border: 1px solid var(--ring);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
+}
+
+/* Sidebar */
+.sidebar .card{padding:0}
+.sidebar h2{
+  margin:0; padding:.9rem 1rem;
+  border-bottom:1px solid var(--ring);
+  color:var(--muted);
+  text-transform:uppercase;
+}
+.nav{list-style:none; margin:0; padding:.6rem; display:grid; gap:.35rem}
+.nav a{
+  display:block; text-decoration:none; color:var(--link);
+  padding:.55rem .7rem; border-radius:10px;
+  border:1px solid transparent;
+}
+.nav a:hover{
+  border-color:var(--ring);
+  background: rgba(255,255,255,.6);
+}
+
+/* Body text helpers */
+.muted{color:var(--muted)}
+.lead{font-size:clamp(1rem,1.2vw,1.1rem); line-height:1.45}
+
+/* Footer (non-fixed here so it never overlaps content) */
+.site-footer{
+  border-top:1px solid var(--ring);
+  background: rgba(255,255,255,.75);
+}
+.site-footer .wrap{
+  max-width:var(--maxw);
+  margin-inline:auto;
+  display:flex; align-items:center; gap:1rem;
+  padding:.6rem 1rem;
+}
+.site-footer .copy{color:var(--muted); margin-right:auto}
+.site-footer .contacts{display:flex; gap:.6rem}
+.site-footer .contacts a{
+  color:var(--link); text-decoration:none;
+  border:1px solid var(--ring); border-radius:10px; padding:.3rem .55rem;
+  background: rgba(255,255,255,.65);
+}
+.site-footer .contacts a:hover{background:#fff}
