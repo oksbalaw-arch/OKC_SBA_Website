@@ -66,6 +66,33 @@
     .sba-title { margin: 0 0 .5rem; text-align: center; }
     .sba-title a { color: #d4af37; text-decoration: none; }
     .sba-title a:hover { text-decoration: underline; }
+
+    /* === Event banner (clickable, hover-swap ready) === */
+    .event-cta { margin-top: .8rem; }
+    .event-banner {
+      position: relative;
+      display: block;
+      width: min(960px, 95vw);
+      border-radius: 14px;
+      overflow: hidden;
+      outline: 1px solid rgba(255,255,255,.05);
+      box-shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.04);
+      text-decoration: none;
+    }
+    .event-banner .event-img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    /* crossfade to the hover image for future pumpkin animation */
+    .event-banner .event-img.hover {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .25s ease;
+      pointer-events: none;
+    }
+    .event-banner:hover .event-img.hover { opacity: 1; }
   </style>
 
 </head>
@@ -105,6 +132,16 @@
       </h1>
       <div class="hero">
         <img src="sba-banner.png" alt="SBA banner" loading="eager" />
+      </div>
+
+      <!-- NEW: Event banner link -->
+      <div class="event-cta">
+        <a class="event-banner" href="sba_event.html" aria-label="Open SBA Event page">
+          <!-- Default image -->
+          <img class="event-img base" src="sba-event.png" alt="SBA Event Page" />
+          <!-- Hover image: prepares for pumpkin mouth animation later -->
+          <img class="event-img hover" src="sba-event1.png" alt="" aria-hidden="true" />
+        </a>
       </div>
     </section>
 
