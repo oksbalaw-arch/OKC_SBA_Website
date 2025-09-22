@@ -55,44 +55,38 @@
     .clubs.right { align-self: stretch; min-height: 0; display: flex; }
     .clubs.right > .club-list { flex: 1 1 auto; min-height: 0; overflow: auto; }
 
-    /* CENTER: vertically center the title + banner */
+    /* CENTER: banners stack */
     .center-stage {
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;  /* vertical center */
+      justify-content: flex-start;
       align-items: center;
+      gap: .75rem;
     }
-    .sba-title { margin: 0 0 .5rem; text-align: center; }
+    .sba-title { margin: 0 0 .4rem; text-align: center; }
     .sba-title a { color: #d4af37; text-decoration: none; }
     .sba-title a:hover { text-decoration: underline; }
 
-    /* === Event banner (clickable, hover-swap ready) === */
-    .event-cta { margin-top: .8rem; }
-    .event-banner {
+    /* Banner stack */
+    .banner-stack{ width: min(960px, 95vw); display: grid; gap: .75rem; }
+    .banner-frame{
       position: relative;
-      display: block;
-      width: min(960px, 95vw);
+      height: 180px;  /* adjust this height if needed */
       border-radius: 14px;
       overflow: hidden;
       outline: 1px solid rgba(255,255,255,.05);
       box-shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.04);
-      text-decoration: none;
     }
-    .event-banner .event-img {
-      display: block;
-      width: 100%;
-      height: auto;
+    .banner-frame img{
+      width: 100%; height: 100%; object-fit: cover; display: block;
     }
-    /* crossfade to the hover image for future pumpkin animation */
-    .event-banner .event-img.hover {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity .25s ease;
-      pointer-events: none;
+
+    /* Hover swap for event banner */
+    .banner-frame .hover{
+      position: absolute; inset: 0; opacity: 0; transition: opacity .25s ease; pointer-events: none;
     }
-    .event-banner:hover .event-img.hover { opacity: 1; }
+    .banner-frame:hover .hover{ opacity: 1; }
   </style>
 
 </head>
@@ -125,23 +119,30 @@
       </div>
     </aside>
 
-    <!-- Center: SBA title + banner -->
+    <!-- Center: SBA title + banners -->
     <section class="center-stage">
       <h1 class="sba-title">
         <a href="sba.html" aria-label="Go to SBA home">STUDENT BAR ASSOCIATION</a>
       </h1>
-      <div class="hero">
-        <img src="sba-banner.png" alt="SBA banner" loading="eager" />
-      </div>
 
-      <!-- NEW: Event banner link -->
-      <div class="event-cta">
-        <a class="event-banner" href="sba_event.html" aria-label="Open SBA Event page">
-          <!-- Default image -->
-          <img class="event-img base" src="sba-event.png" alt="SBA Event Page" />
-          <!-- Hover image: prepares for pumpkin mouth animation later -->
-          <img class="event-img hover" src="sba-event1.png" alt="" aria-hidden="true" />
+      <div class="banner-stack">
+
+        <!-- Event banner -->
+        <a class="banner-frame" href="sba_event.html" aria-label="Open SBA Event page">
+          <img src="sba-event.png" alt="SBA Event Page" />
+          <img class="hover" src="sba-event1.png" alt="" aria-hidden="true" />
         </a>
+
+        <!-- Parking banner -->
+        <a class="banner-frame" href="https://docs.google.com/forms/d/e/1FAIpQLScO9ongoUqgo2aYBKd8X7kWXvFu9pCxhr_dmugrIXOxVoSuXw/viewform" aria-label="Parking Event">
+          <img src="parking.png" alt="Reserved Parking Banner" loading="lazy" />
+        </a>
+
+        <!-- SBA banner -->
+        <div class="banner-frame">
+          <img src="sba-banner.png" alt="SBA banner" loading="eager" />
+        </div>
+
       </div>
     </section>
 
@@ -165,7 +166,6 @@
         <li><a href="clubs/society-of-litigators.html">Society of Litigators</a></li>
         <li><a href="clubs/stroup-reform.html">Stroup Society for Reform</a></li>
         <li><a href="clubs/texas-legal.html">Texas Legal Society</a></li>
-        <!-- <li><a href="SBA_QRCode.png" target="_blank">SBA QR Code</a></li> -->
       </ul>
     </aside>
   </main>
