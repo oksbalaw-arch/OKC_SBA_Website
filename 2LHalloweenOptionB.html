@@ -1,148 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>2L Halloween — Tickets</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    body {
-      margin:0; min-height:100vh;
-      background: #0f1115 url('2LHalloween.jpg') center/cover no-repeat fixed;
-      color:#e9ecf1;
-    }
-    .overlay { min-height:100vh; display:grid; place-items:center; padding:2rem 1rem;
-      background: radial-gradient(1100px 380px at 50% -200px, rgba(0,0,0,.45), rgba(0,0,0,.78)); }
-    .panel {
-      width:min(720px,92vw);
-      border-radius:16px; padding:clamp(1rem,3vw,1.5rem);
-      background:rgba(15,17,21,.72); backdrop-filter:blur(4px);
-      border:1px solid rgba(255,255,255,.12); box-shadow:0 16px 48px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.04);
-    }
-    h1 { margin:.25rem 0 .6rem; font-weight:900; letter-spacing:.4px; }
-    .muted { color:#aeb6c3; }
-    form { display:grid; gap:.8rem; margin-top:.5rem; }
-    .row { display:grid; gap:.6rem; grid-template-columns:1fr 1fr; }
-    @media (max-width:700px){ .row { grid-template-columns:1fr; } }
-    label { font-weight:700; letter-spacing:.25px; }
-    input,button {
-      font:inherit; padding:.7rem .8rem; width:100%;
-      border-radius:10px; border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.08); color:inherit;
-    }
-    .actions { display:grid; gap:.6rem; }
-    .btn {
-      display:inline-flex; justify-content:center; align-items:center; gap:.5rem;
-      padding:.85rem 1rem; border-radius:12px; border:1px solid #59bfff;
-      background:linear-gradient(180deg,rgba(89,191,255,.25), rgba(89,191,255,.12));
-      color:#e9f6ff; font-weight:800; text-decoration:none; cursor:pointer;
-    }
-    .tiny { font-size:.9rem; color:#93a0b2; }
-    .ok { color:#42c767; } .err { color:#ff6a6a; }
-  </style>
+  <meta charset="utf-8">
+  <title>2L Halloween Event</title>
+  <meta http-equiv="refresh" content="0; url=https://account.venmo.com/u/oculaw">
+  <link rel="canonical" href="https://account.venmo.com/u/oculaw">
 </head>
 <body>
-  <main class="overlay">
-    <section class="panel" aria-label="Buy tickets">
-      <h1>Law & Disorder — Tickets</h1>
-      <p class="muted">Enter your info, choose quantity, then we’ll send you to Venmo with the details prefilled.</p>
-
-      <form id="f">
-        <div class="row">
-          <div>
-            <label for="fullName">Name</label>
-            <input id="fullName" name="fullName" required placeholder="First Last" autocomplete="name" />
-          </div>
-          <div>
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" required placeholder="you@school.edu" autocomplete="email" />
-          </div>
-        </div>
-
-        <div>
-          <label for="qty">Quantity</label>
-          <input id="qty" name="qty" type="number" min="1" value="1" required />
-        </div>
-
-        <div>
-          <label for="note">Note (Names of Extra Attendees)</label>
-          <input id="note" name="note" placeholder="Law & Disorder ticket" />
-        </div>
-
-        <div class="actions">
-          <button type="submit" class="btn">Continue to Venmo</button>
-          <div id="msg" class="tiny" aria-live="polite"></div>
-        </div>
-      </form>
-    </section>
-  </main>
-
-  <script>
-    // === CONFIG ===
-    const ENDPOINT = ""; // Google Apps Script endpoint if you want to log
-    const VENMO_USER = "oculaw";  // <-- your Venmo username (no @)
-    const DEFAULT_NOTE = "2L Halloween Ticket";
-    const PRICE = 15; // dollars per ticket
-    // =============
-
-    const form = document.getElementById('f');
-    const msg  = document.getElementById('msg');
-
-    function venmoSafeNote(str) {
-      let s = (str || "").replace(/[@|:$=]/g, ' '); // strip risky chars
-      s = s.replace(/\s+/g, ' ').trim();
-      const MAX = 120;
-      if (s.length > MAX) s = s.slice(0, MAX - 1) + '…';
-      return s;
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      msg.textContent = 'Saving your info…';
-      msg.className = 'tiny';
-
-      const name   = document.getElementById('fullName').value.trim();
-      const email  = document.getElementById('email').value.trim();
-      const qty    = parseInt(document.getElementById('qty').value, 10) || 1;
-      const userNote = (document.getElementById('note').value || DEFAULT_NOTE).trim();
-
-      const total  = qty * PRICE;
-
-      // Build Venmo-safe note
-      const parts = [];
-      parts.push(userNote || DEFAULT_NOTE);
-      if (name) parts.push(name);
-      parts.push(`Qty ${qty} x ${PRICE} = ${total}`);
-      const fullNote = venmoSafeNote(parts.join(' - '));
-
-      // Optional: log to Google Sheet
-      try {
-        if (ENDPOINT) {
-          await fetch(ENDPOINT, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ name, email, qty, total, note: fullNote, ua: navigator.userAgent })
-          });
-          msg.textContent = '✅ Saved! Redirecting to Venmo…';
-          msg.className = 'tiny ok';
-        } else {
-          msg.textContent = 'Redirecting to Venmo…';
-        }
-      } catch {
-        msg.textContent = '⚠️ Could not save info, continuing to Venmo…';
-        msg.className = 'tiny err';
-      }
-
-      // Redirect to Venmo
-      const venmoUrl =
-        `https://account.venmo.com/pay?recipients=${encodeURIComponent(VENMO_USER)}`
-        + `&amount=${encodeURIComponent(total.toFixed(2))}`
-        + `&note=${encodeURIComponent(fullNote)}`;
-
-      setTimeout(() => { window.location.href = venmoUrl; }, 400);
-    });
-  </script>
+  <p>If you are not redirected automatically, <a href="https://account.venmo.com/u/oculaw">click here</a>.</p>
 </body>
 </html>
+
+
+
+
 
