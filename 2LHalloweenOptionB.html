@@ -4,60 +4,51 @@
   <meta charset="utf-8" />
   <title>2L Halloween — Tickets</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- <link rel="icon" type="image/png" href="favicon.png" /> -->
+  <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    body{
+    body {
       margin:0; min-height:100vh;
       background: #0f1115 url('2LHalloween.jpg') center/cover no-repeat fixed;
       color:#e9ecf1;
     }
-    .overlay{ min-height:100vh; display:grid; place-items:center; padding:2rem 1rem;
+    .overlay { min-height:100vh; display:grid; place-items:center; padding:2rem 1rem;
       background: radial-gradient(1100px 380px at 50% -200px, rgba(0,0,0,.45), rgba(0,0,0,.78)); }
-    .panel{
+    .panel {
       width:min(720px,92vw);
       border-radius:16px; padding:clamp(1rem,3vw,1.5rem);
       background:rgba(15,17,21,.72); backdrop-filter:blur(4px);
       border:1px solid rgba(255,255,255,.12); box-shadow:0 16px 48px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.04);
     }
-    h1{ margin:.25rem 0 .6rem; font-weight:900; letter-spacing:.4px; }
-    .muted{ color:#aeb6c3; }
-    form{ display:grid; gap:.9rem; margin-top:.6rem; }
-    .row{ display:grid; gap:.6rem; grid-template-columns:1fr 1fr; }
-    @media (max-width:700px){ .row{ grid-template-columns:1fr; } }
-    label{ font-weight:700; letter-spacing:.25px; }
-    input,button,select{
+    h1 { margin:.25rem 0 .6rem; font-weight:900; letter-spacing:.4px; }
+    .muted { color:#aeb6c3; }
+    form { display:grid; gap:.8rem; margin-top:.5rem; }
+    .row { display:grid; gap:.6rem; grid-template-columns:1fr 1fr; }
+    @media (max-width:700px){ .row { grid-template-columns:1fr; } }
+    label { font-weight:700; letter-spacing:.25px; }
+    input,button {
       font:inherit; padding:.7rem .8rem; width:100%;
       border-radius:10px; border:1px solid rgba(255,255,255,.18);
       background:rgba(255,255,255,.08); color:inherit;
     }
-    .amounts{ display:flex; flex-wrap:wrap; gap:.5rem; }
-    .chip{
-      border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06);
-      padding:.45rem .7rem; border-radius:999px; cursor:pointer; user-select:none;
-    }
-    .chip.active{ border-color:#59bfff; box-shadow:0 0 0 2px rgba(89,191,255,.25) inset; }
-    .qty-row{ display:flex; gap:.6rem; align-items:center; }
-    .qty-row input{ max-width:120px; text-align:center; }
-    .total{ font-weight:900; letter-spacing:.3px; }
-    .actions{ display:grid; gap:.6rem; }
-    .btn{
+    .actions { display:grid; gap:.6rem; }
+    .btn {
       display:inline-flex; justify-content:center; align-items:center; gap:.5rem;
       padding:.85rem 1rem; border-radius:12px; border:1px solid #59bfff;
       background:linear-gradient(180deg,rgba(89,191,255,.25), rgba(89,191,255,.12));
       color:#e9f6ff; font-weight:800; text-decoration:none; cursor:pointer;
     }
-    .tiny{ font-size:.9rem; color:#93a0b2; }
-    .ok{ color:#42c767; } .err{ color:#ff6a6a; }
+    .tiny { font-size:.9rem; color:#93a0b2; }
+    .ok { color:#42c767; } .err { color:#ff6a6a; }
   </style>
 </head>
 <body>
   <main class="overlay">
     <section class="panel" aria-label="Buy tickets">
       <h1>Law & Disorder — Tickets</h1>
-      <p class="muted">Enter your info, pick a ticket price and quantity, then we’ll send you to Venmo with the total prefilled.</p>
+      <p class="muted">Enter your info, choose quantity, then we’ll send you to Venmo with the details prefilled.</p>
 
-      <form id="f" novalidate>
+      <form id="f">
         <div class="row">
           <div>
             <label for="fullName">Name</label>
@@ -70,21 +61,13 @@
         </div>
 
         <div>
-          <label>Ticket Price (per ticket)</label>
-          <div class="amounts" id="chips">
-            <div class="chip active" data-amt="15">$15 — Student Early</div>
-          </div>
-        </div>
-
-        <div class="qty-row">
-          <label for="qty" style="margin:0;">Quantity</label>
-          <input id="qty" type="number" min="1" max="10" value="1" />
-          <div class="total" id="total">$15.00 total</div>
+          <label for="qty">Quantity</label>
+          <input id="qty" name="qty" type="number" min="1" value="1" required />
         </div>
 
         <div>
           <label for="note">Note (optional)</label>
-          <input id="note" name="note" placeholder="Law & Disorder ticket(s) for Your Name" />
+          <input id="note" name="note" placeholder="Law & Disorder ticket" />
         </div>
 
         <div class="actions">
@@ -96,47 +79,23 @@
   </main>
 
   <script>
-    // === CONFIG: Set these ===
-    const ENDPOINT   = "";            // <-- paste your Apps Script /exec URL to log (or leave "" to skip)
-    const VENMO_USER = "oculaw";      // <-- your Venmo username (no @)
-    const DEFAULT_NOTE = "Law & Disorder ticket";
-    // =========================
+    // === CONFIG ===
+    const ENDPOINT = ""; // Google Apps Script endpoint if you want to log
+    const VENMO_USER = "oculaw";  // <-- your Venmo username (no @)
+    const DEFAULT_NOTE = "2L Halloween Ticket";
+    const PRICE = 15; // dollars per ticket
+    // =============
 
-    // Elements
-    const form  = document.getElementById('f');
-    const chips = Array.from(document.querySelectorAll('#chips .chip'));
-    const qtyEl = document.getElementById('qty');
-    const totalEl = document.getElementById('total');
-    const msg = document.getElementById('msg');
+    const form = document.getElementById('f');
+    const msg  = document.getElementById('msg');
 
-    // Helpers
-    function pricePerTicket(){
-      const active = chips.find(c => c.classList.contains('active'));
-      const val = parseFloat(active?.dataset.amt || "15");
-      return isFinite(val) && val > 0 ? val : 15;
+    function venmoSafeNote(str) {
+      let s = (str || "").replace(/[@|:$=]/g, ' '); // strip risky chars
+      s = s.replace(/\s+/g, ' ').trim();
+      const MAX = 120;
+      if (s.length > MAX) s = s.slice(0, MAX - 1) + '…';
+      return s;
     }
-    function quantity(){
-      const q = parseInt(qtyEl.value, 10);
-      return Number.isFinite(q) && q > 0 ? Math.min(q, 10) : 1;
-    }
-    function total(){
-      return pricePerTicket() * quantity();
-    }
-    function fmt(n){ return n.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}); }
-
-    function updateTotalUI(){
-      totalEl.textContent = `$${fmt(total())} total`;
-    }
-
-    chips.forEach(ch => {
-      ch.addEventListener('click', () => {
-        chips.forEach(x => x.classList.remove('active'));
-        ch.classList.add('active');
-        updateTotalUI();
-      });
-    });
-    qtyEl.addEventListener('input', updateTotalUI);
-    updateTotalUI();
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -145,55 +104,43 @@
 
       const name   = document.getElementById('fullName').value.trim();
       const email  = document.getElementById('email').value.trim();
-      const per    = pricePerTicket();
-      const qty    = quantity();
-      const amount = total(); // TOTAL dollars to charge
+      const qty    = parseInt(document.getElementById('qty').value, 10) || 1;
       const userNote = (document.getElementById('note').value || DEFAULT_NOTE).trim();
 
-      // Build Venmo note with details (helps reconciliation even if amount prefill fails)
+      const total  = qty * PRICE;
+
+      // Build Venmo-safe note
       const parts = [];
       parts.push(userNote || DEFAULT_NOTE);
-      if (name)  parts.push(`Name: ${name}`);
-      if (email) parts.push(`Email: ${email}`);
-      parts.push(`Qty: ${qty} @ $${fmt(per)} = $${fmt(amount)}`);
-      const fullNote = parts.join(' | ');
+      if (name) parts.push(name);
+      parts.push(`Qty ${qty} x ${PRICE} = ${total}`);
+      const fullNote = venmoSafeNote(parts.join(' - '));
 
-      // 1) (Optional) Log to your Google Sheet
-      if (ENDPOINT && ENDPOINT.startsWith('http')) {
-        try {
-          const res = await fetch(ENDPOINT, {
+      // Optional: log to Google Sheet
+      try {
+        if (ENDPOINT) {
+          await fetch(ENDPOINT, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              name, email,
-              price_per_ticket: per,
-              quantity: qty,
-              total: amount,
-              note: fullNote,
-              ua: navigator.userAgent
-            })
+            body: JSON.stringify({ name, email, qty, total, note: fullNote, ua: navigator.userAgent })
           });
-          const json = await res.json().catch(()=>({ok:true}));
-          if (!json.ok) throw new Error(json.error || 'Log failed');
           msg.textContent = '✅ Saved! Redirecting to Venmo…';
           msg.className = 'tiny ok';
-        } catch (err) {
-          console.warn('Log failed:', err);
-          msg.textContent = '⚠️ Could not save info, continuing to Venmo…';
-          msg.className = 'tiny err';
+        } else {
+          msg.textContent = 'Redirecting to Venmo…';
         }
-      } else {
-        msg.textContent = 'Redirecting to Venmo…';
+      } catch {
+        msg.textContent = '⚠️ Could not save info, continuing to Venmo…';
+        msg.className = 'tiny err';
       }
 
-      // 2) Redirect to Venmo with TOTAL amount + detailed note
+      // Redirect to Venmo
       const venmoUrl =
         `https://account.venmo.com/pay?recipients=${encodeURIComponent(VENMO_USER)}`
-        + `&amount=${encodeURIComponent(amount.toFixed(2))}`
+        + `&amount=${encodeURIComponent(total.toFixed(2))}`
         + `&note=${encodeURIComponent(fullNote)}`;
 
-      // tiny delay so the status message paints
-      setTimeout(() => { window.location.href = venmoUrl; }, 150);
+      setTimeout(() => { window.location.href = venmoUrl; }, 400);
     });
   </script>
 </body>
