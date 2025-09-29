@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <title>2L Halloween — Tickets</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Remove or fix this if you don't have the file yet -->
   <!-- <link rel="icon" type="image/png" href="favicon.png" /> -->
   <link rel="stylesheet" href="styles.css" />
   <style>
@@ -23,7 +22,7 @@
     }
     h1{ margin:.25rem 0 .6rem; font-weight:900; letter-spacing:.4px; }
     .muted{ color:#aeb6c3; }
-    form{ display:grid; gap:.8rem; margin-top:.5rem; }
+    form{ display:grid; gap:.9rem; margin-top:.6rem; }
     .row{ display:grid; gap:.6rem; grid-template-columns:1fr 1fr; }
     @media (max-width:700px){ .row{ grid-template-columns:1fr; } }
     label{ font-weight:700; letter-spacing:.25px; }
@@ -38,6 +37,9 @@
       padding:.45rem .7rem; border-radius:999px; cursor:pointer; user-select:none;
     }
     .chip.active{ border-color:#59bfff; box-shadow:0 0 0 2px rgba(89,191,255,.25) inset; }
+    .qty-row{ display:flex; gap:.6rem; align-items:center; }
+    .qty-row input{ max-width:120px; text-align:center; }
+    .total{ font-weight:900; letter-spacing:.3px; }
     .actions{ display:grid; gap:.6rem; }
     .btn{
       display:inline-flex; justify-content:center; align-items:center; gap:.5rem;
@@ -53,7 +55,7 @@
   <main class="overlay">
     <section class="panel" aria-label="Buy tickets">
       <h1>Law & Disorder — Tickets</h1>
-      <p class="muted">Enter your info, choose an amount, then we’ll send you to Venmo with the details prefilled.</p>
+      <p class="muted">Enter your info, pick a ticket price and quantity, then we’ll send you to Venmo with the total prefilled.</p>
 
       <form id="f" novalidate>
         <div class="row">
@@ -68,19 +70,21 @@
         </div>
 
         <div>
-          <label>Amount</label>
+          <label>Ticket Price (per ticket)</label>
           <div class="amounts" id="chips">
             <div class="chip active" data-amt="15">$15 — Student Early</div>
-            <!-- Add more chips if desired:
-            <div class="chip" data-amt="20">$20 — Week Of</div>
-            <div class="chip" data-amt="25">$25 — At Door</div>
-            -->
           </div>
+        </div>
+
+        <div class="qty-row">
+          <label for="qty" style="margin:0;">Quantity</label>
+          <input id="qty" type="number" min="1" max="10" value="1" />
+          <div class="total" id="total">$15.00 total</div>
         </div>
 
         <div>
           <label for="note">Note (optional)</label>
-          <input id="note" name="note" placeholder="Law & Disorder ticket for Your Name" />
+          <input id="note" name="note" placeholder="Law & Disorder ticket(s) for Your Name" />
         </div>
 
         <div class="actions">
@@ -93,29 +97,46 @@
 
   <script>
     // === CONFIG: Set these ===
-    const ENDPOINT   = "";                 // <-- paste your Apps Script /exec URL to log (or leave "" to skip)
-    const VENMO_USER = "oculaw";           // <-- your Venmo username (no @)
+    const ENDPOINT   = "";            // <-- paste your Apps Script /exec URL to log (or leave "" to skip)
+    const VENMO_USER = "oculaw";      // <-- your Venmo username (no @)
     const DEFAULT_NOTE = "Law & Disorder ticket";
     // =========================
 
-    // Grab DOM elements
-    const form = document.getElementById('f');
+    // Elements
+    const form  = document.getElementById('f');
     const chips = Array.from(document.querySelectorAll('#chips .chip'));
+    const qtyEl = document.getElementById('qty');
+    const totalEl = document.getElementById('total');
     const msg = document.getElementById('msg');
 
     // Helpers
-    function activeAmount(){
+    function pricePerTicket(){
       const active = chips.find(c => c.classList.contains('active'));
-      if (!active) return 15;
-      const val = parseFloat(active.dataset.amt || "15");
+      const val = parseFloat(active?.dataset.amt || "15");
       return isFinite(val) && val > 0 ? val : 15;
     }
+    function quantity(){
+      const q = parseInt(qtyEl.value, 10);
+      return Number.isFinite(q) && q > 0 ? Math.min(q, 10) : 1;
+    }
+    function total(){
+      return pricePerTicket() * quantity();
+    }
+    function fmt(n){ return n.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}); }
+
+    function updateTotalUI(){
+      totalEl.textContent = `$${fmt(total())} total`;
+    }
+
     chips.forEach(ch => {
       ch.addEventListener('click', () => {
         chips.forEach(x => x.classList.remove('active'));
         ch.classList.add('active');
+        updateTotalUI();
       });
     });
+    qtyEl.addEventListener('input', updateTotalUI);
+    updateTotalUI();
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -124,24 +145,33 @@
 
       const name   = document.getElementById('fullName').value.trim();
       const email  = document.getElementById('email').value.trim();
-      const amount = activeAmount();
+      const per    = pricePerTicket();
+      const qty    = quantity();
+      const amount = total(); // TOTAL dollars to charge
       const userNote = (document.getElementById('note').value || DEFAULT_NOTE).trim();
 
-      // Build a compact Venmo note so treasurer sees everything even if amount prefill fails
+      // Build Venmo note with details (helps reconciliation even if amount prefill fails)
       const parts = [];
       parts.push(userNote || DEFAULT_NOTE);
       if (name)  parts.push(`Name: ${name}`);
       if (email) parts.push(`Email: ${email}`);
-      parts.push(`$${amount.toFixed(2)}`);
+      parts.push(`Qty: ${qty} @ $${fmt(per)} = $${fmt(amount)}`);
       const fullNote = parts.join(' | ');
 
-      // 1) (Optional) Log to your Google Sheet via Apps Script
+      // 1) (Optional) Log to your Google Sheet
       if (ENDPOINT && ENDPOINT.startsWith('http')) {
         try {
           const res = await fetch(ENDPOINT, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ name, email, amount, note: fullNote, ua: navigator.userAgent })
+            body: JSON.stringify({
+              name, email,
+              price_per_ticket: per,
+              quantity: qty,
+              total: amount,
+              note: fullNote,
+              ua: navigator.userAgent
+            })
           });
           const json = await res.json().catch(()=>({ok:true}));
           if (!json.ok) throw new Error(json.error || 'Log failed');
@@ -156,13 +186,13 @@
         msg.textContent = 'Redirecting to Venmo…';
       }
 
-      // 2) Redirect to Venmo with amount + note
+      // 2) Redirect to Venmo with TOTAL amount + detailed note
       const venmoUrl =
         `https://account.venmo.com/pay?recipients=${encodeURIComponent(VENMO_USER)}`
         + `&amount=${encodeURIComponent(amount.toFixed(2))}`
         + `&note=${encodeURIComponent(fullNote)}`;
 
-      // give the UI message a moment to render, then go
+      // tiny delay so the status message paints
       setTimeout(() => { window.location.href = venmoUrl; }, 150);
     });
   </script>
