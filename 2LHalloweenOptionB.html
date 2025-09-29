@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>2L Halloween — Tickets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Remove or fix this if you don't have the file yet -->
+  <!-- <link rel="icon" type="image/png" href="favicon.png" /> -->
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body{
+      margin:0; min-height:100vh;
+      background: #0f1115 url('2LHalloween.jpg') center/cover no-repeat fixed;
+      color:#e9ecf1;
+    }
+    .overlay{ min-height:100vh; display:grid; place-items:center; padding:2rem 1rem;
+      background: radial-gradient(1100px 380px at 50% -200px, rgba(0,0,0,.45), rgba(0,0,0,.78)); }
+    .panel{
+      width:min(720px,92vw);
+      border-radius:16px; padding:clamp(1rem,3vw,1.5rem);
+      background:rgba(15,17,21,.72); backdrop-filter:blur(4px);
+      border:1px solid rgba(255,255,255,.12); box-shadow:0 16px 48px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+    h1{ margin:.25rem 0 .6rem; font-weight:900; letter-spacing:.4px; }
+    .muted{ color:#aeb6c3; }
+    form{ display:grid; gap:.8rem; margin-top:.5rem; }
+    .row{ display:grid; gap:.6rem; grid-template-columns:1fr 1fr; }
+    @media (max-width:700px){ .row{ grid-template-columns:1fr; } }
+    label{ font-weight:700; letter-spacing:.25px; }
+    input,button,select{
+      font:inherit; padding:.7rem .8rem; width:100%;
+      border-radius:10px; border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.08); color:inherit;
+    }
+    .amounts{ display:flex; flex-wrap:wrap; gap:.5rem; }
+    .chip{
+      border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06);
+      padding:.45rem .7rem; border-radius:999px; cursor:pointer; user-select:none;
+    }
+    .chip.active{ border-color:#59bfff; box-shadow:0 0 0 2px rgba(89,191,255,.25) inset; }
+    .actions{ display:grid; gap:.6rem; }
+    .btn{
+      display:inline-flex; justify-content:center; align-items:center; gap:.5rem;
+      padding:.85rem 1rem; border-radius:12px; border:1px solid #59bfff;
+      background:linear-gradient(180deg,rgba(89,191,255,.25), rgba(89,191,255,.12));
+      color:#e9f6ff; font-weight:800; text-decoration:none; cursor:pointer;
+    }
+    .tiny{ font-size:.9rem; color:#93a0b2; }
+    .ok{ color:#42c767; } .err{ color:#ff6a6a; }
+  </style>
+</head>
+<body>
+  <main class="overlay">
+    <section class="panel" aria-label="Buy tickets">
+      <h1>Law & Disorder — Tickets</h1>
+      <p class="muted">Enter your info, choose an amount, then we’ll send you to Venmo with the details prefilled.</p>
+
+      <form id="f" novalidate>
+        <div class="row">
+          <div>
+            <label for="fullName">Name</label>
+            <input id="fullName" name="fullName" required placeholder="First Last" autocomplete="name" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@school.edu" autocomplete="email" />
+          </div>
+        </div>
+
+        <div>
+          <label>Amount</label>
+          <div class="amounts" id="chips">
+            <div class="chip active" data-amt="15">$15 — Student Early</div>
+            <!-- Add more chips if desired:
+            <div class="chip" data-amt="20">$20 — Week Of</div>
+            <div class="chip" data-amt="25">$25 — At Door</div>
+            -->
+          </div>
+        </div>
+
+        <div>
+          <label for="note">Note (optional)</label>
+          <input id="note" name="note" placeholder="Law & Disorder ticket for Your Name" />
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn">Continue to Venmo</button>
+          <div id="msg" class="tiny" aria-live="polite"></div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // === CONFIG: Set these ===
+    const ENDPOINT   = "";                 // <-- paste your Apps Script /exec URL to log (or leave "" to skip)
+    const VENMO_USER = "oculaw";           // <-- your Venmo username (no @)
+    const DEFAULT_NOTE = "Law & Disorder ticket";
+    // =========================
+
+    // Grab DOM elements
+    const form = document.getElementById('f');
+    const chips = Array.from(document.querySelectorAll('#chips .chip'));
+    const msg = document.getElementById('msg');
+
+    // Helpers
+    function activeAmount(){
+      const active = chips.find(c => c.classList.contains('active'));
+      if (!active) return 15;
+      const val = parseFloat(active.dataset.amt || "15");
+      return isFinite(val) && val > 0 ? val : 15;
+    }
+    chips.forEach(ch => {
+      ch.addEventListener('click', () => {
+        chips.forEach(x => x.classList.remove('active'));
+        ch.classList.add('active');
+      });
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = 'Saving your info…';
+      msg.className = 'tiny';
+
+      const name   = document.getElementById('fullName').value.trim();
+      const email  = document.getElementById('email').value.trim();
+      const amount = activeAmount();
+      const userNote = (document.getElementById('note').value || DEFAULT_NOTE).trim();
+
+      // Build a compact Venmo note so treasurer sees everything even if amount prefill fails
+      const parts = [];
+      parts.push(userNote || DEFAULT_NOTE);
+      if (name)  parts.push(`Name: ${name}`);
+      if (email) parts.push(`Email: ${email}`);
+      parts.push(`$${amount.toFixed(2)}`);
+      const fullNote = parts.join(' | ');
+
+      // 1) (Optional) Log to your Google Sheet via Apps Script
+      if (ENDPOINT && ENDPOINT.startsWith('http')) {
+        try {
+          const res = await fetch(ENDPOINT, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ name, email, amount, note: fullNote, ua: navigator.userAgent })
+          });
+          const json = await res.json().catch(()=>({ok:true}));
+          if (!json.ok) throw new Error(json.error || 'Log failed');
+          msg.textContent = '✅ Saved! Redirecting to Venmo…';
+          msg.className = 'tiny ok';
+        } catch (err) {
+          console.warn('Log failed:', err);
+          msg.textContent = '⚠️ Could not save info, continuing to Venmo…';
+          msg.className = 'tiny err';
+        }
+      } else {
+        msg.textContent = 'Redirecting to Venmo…';
+      }
+
+      // 2) Redirect to Venmo with amount + note
+      const venmoUrl =
+        `https://account.venmo.com/pay?recipients=${encodeURIComponent(VENMO_USER)}`
+        + `&amount=${encodeURIComponent(amount.toFixed(2))}`
+        + `&note=${encodeURIComponent(fullNote)}`;
+
+      // give the UI message a moment to render, then go
+      setTimeout(() => { window.location.href = venmoUrl; }, 150);
+    });
+  </script>
+</body>
+</html>
