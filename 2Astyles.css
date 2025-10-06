@@ -1,0 +1,119 @@
+/* Western / gunmetal theme add-on for Second Amendment Society */
+
+:root{
+  --sas-bg: #101317;              /* gunmetal night */
+  --sas-ink: #ecf0f6;             /* soft steel white */
+  --sas-muted: #a9b2c1;
+  --sas-sun: #dba44f;             /* desert sun */
+  --sas-leather: #6a4a2e;         /* leather brown */
+  --sas-iron: #2b2f35;            /* gunmetal */
+  --sas-ring: #f2c062;            /* warm highlight */
+}
+
+/* Page shell tint */
+body { background: radial-gradient(1200px 500px at 50% -220px, #171b21, var(--sas-bg)); color: var(--sas-ink); }
+.muted, .sba-muted { color: var(--sas-muted); }
+
+/* Banner */
+.sas-banner{
+  position: relative;
+  display: grid; place-items: center;
+  margin: .5rem 0 1rem; border-radius: 16px; overflow: hidden;
+  outline: 1px solid rgba(255,255,255,.06);
+  box-shadow: 0 14px 40px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.sas-banner img{ width: min(1100px, 96vw); height: auto; display: block; filter: contrast(1.05) saturate(1.02); }
+.sas-title{
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  margin: 0; padding: .2rem .6rem .3rem;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  letter-spacing: .12rem; text-transform: uppercase; font-weight: 900;
+  color: #1a1208; background: linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.15));
+  border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+}
+.sas-sub{
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  margin: 0; font-size: .95rem; letter-spacing: .08rem; text-transform: uppercase;
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 1px 0 rgba(0,0,0,.6);
+}
+
+/* Cards */
+.sas-card{
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.04);
+}
+
+/* Panel grouping */
+.sas-panels{ display: grid; gap: 1rem; }
+.panel{ padding: .9rem; border-radius: 12px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); }
+.panel-title{ margin: .2rem 0 .6rem; font-weight: 900; letter-spacing: .04rem; }
+
+/* Calendar */
+.calendar-wrap{
+  position: relative; min-height: 260px;
+  border-radius: 12px; overflow: hidden;
+  outline: 1px solid rgba(255,255,255,.06);
+  background: linear-gradient(180deg, rgba(219,164,79,.10), rgba(16,19,23,.4));
+}
+.calendar-wrap iframe{ width: 100%; height: 420px; border: 0; display: block; }
+.calendar-fallback{ padding: .8rem; }
+
+/* Document columns */
+.doc-columns{ display: grid; gap: .8rem; grid-template-columns: repeat(3, 1fr); }
+.doc-columns h3{ margin: .3rem 0; color: var(--sas-sun); text-transform: uppercase; letter-spacing: .08rem; }
+.docs{ list-style: none; margin: 0; padding: 0; display: grid; gap: .35rem; }
+
+/* Western hover effects */
+
+/* 1) Brand link: metallic “sun glint” sweep */
+.brand-link{
+  position: relative; display: inline-block;
+  color: var(--sas-ink); text-decoration: none;
+  padding: .5rem .7rem; border-radius: .6rem;
+  border: 1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+}
+.brand-link::after{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,.25) 12%, transparent 24%);
+  transform: translateX(-120%);
+  transition: transform .45s ease;
+}
+.brand-link:hover::after{ transform: translateX(140%); }
+.brand-link:hover{ border-color: var(--sas-ring); }
+
+/* 2) Rope underline (links with “rope” pull effect) */
+.rope-link{
+  color: var(--sas-ink); text-decoration: none; position: relative; padding-bottom: 2px;
+  background-image: repeating-linear-gradient( to right, var(--sas-sun) 0 8px, transparent 8px 12px );
+  background-size: 0 2px; background-repeat: no-repeat; background-position: 0 100%;
+  transition: background-size .35s ease;
+}
+.rope-link:hover{ background-size: 100% 2px; }
+
+/* 3) Section title glint */
+.glint{
+  background: linear-gradient(90deg, var(--sas-ink), var(--sas-sun), var(--sas-ink));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  background-size: 200% 100%;
+  animation: glint-move 6s linear infinite;
+}
+@keyframes glint-move{
+  0%{ background-position: 0% 50%; }
+  100%{ background-position: 200% 50%; }
+}
+
+/* Sidebar headings */
+.sidebar h2{
+  color: var(--sas-sun);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+/* Responsive */
+@media (max-width: 900px){
+  .doc-columns{ grid-template-columns: 1fr; }
+  .sas-title{ bottom: 28px; }
+  .sas-sub{ bottom: 8px; }
+}
