@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OAWL | Organization for the Advancement of Women in Law</title>
+  <style>
+    :root{
+      --pink-light:#ffe8ef;
+      --pink:#ffc7da;
+      --pink-accent:#ff89b4;
+      --text:#442433;
+      --muted:#7a4761;
+      --white:#ffffff;
+      --shadow:0 6px 18px rgba(122,71,97,0.08);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:var(--white);color:var(--text);}
+    body{display:flex;flex-direction:column;}
+    header{
+      background:linear-gradient(90deg,var(--pink-light),var(--white));
+      box-shadow:var(--shadow);
+      display:flex;align-items:center;padding:10px 20px;
+      position:fixed;top:0;left:0;right:0;height:70px;z-index:50;
+    }
+    header img{height:50px;width:50px;border-radius:8px;margin-right:10px;}
+    header h1{margin:0;font-size:20px;color:var(--text);}
+    header span{font-size:13px;color:var(--muted);display:block;}
+
+    main{display:flex;flex:1;margin-top:70px;height:calc(100vh - 70px);}
+    aside{
+      width:220px;background:var(--pink-light);
+      border-right:1px solid rgba(0,0,0,0.05);
+      box-shadow:var(--shadow);
+      position:fixed;top:70px;bottom:0;left:0;overflow-y:auto;
+      padding:20px;
+    }
+    aside nav a{
+      display:block;padding:10px 12px;margin-bottom:6px;
+      border-radius:8px;text-decoration:none;
+      color:var(--text);font-weight:600;
+    }
+    aside nav a:hover,aside nav a.active{background:var(--pink-accent);color:white;}
+    section{padding:20px 30px;max-width:950px;margin:0 auto;}
+    .content{margin-left:220px;overflow-y:auto;flex:1;}
+    h2{color:var(--text);margin-top:0;}
+    .card{background:white;border-radius:12px;box-shadow:var(--shadow);padding:18px;margin-bottom:20px;}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;}
+    .member{display:flex;gap:12px;align-items:center;background:var(--white);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);}
+    .avatar{width:70px;height:70px;border-radius:12px;background:var(--pink);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text);}
+    .member h4{margin:0;font-size:16px;}
+    .member p{margin:2px 0 0 0;font-size:13px;color:var(--muted);}
+
+    .constitution{max-height:420px;overflow:auto;padding:10px;background:#fff;border-radius:10px;border:1px solid rgba(0,0,0,0.05);}
+    details summary{cursor:pointer;font-weight:700;color:var(--text);padding:6px;border-radius:8px;}
+    details[open] summary{background:rgba(255,137,180,0.08);}
+
+    .calendar{display:flex;flex-wrap:wrap;gap:18px;}
+    .month{max-width:720px;width:100%;}
+    .month-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+    .month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+    .weekday{font-size:12px;padding:6px;text-align:center;color:var(--muted);}
+    .day{min-height:80px;border:1px solid rgba(0,0,0,0.05);border-radius:8px;padding:6px;position:relative;cursor:pointer;}
+    .day.other{opacity:0.35;}
+    .day .date{position:absolute;top:6px;left:6px;font-size:12px;font-weight:700;color:var(--text);}
+    .event-dot{position:absolute;right:8px;bottom:8px;width:10px;height:10px;border-radius:50%;background:var(--pink-accent);}
+    .events-list{flex:1;min-width:260px;}
+    .event-item{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.05);margin-bottom:8px;}
+    .small{font-size:13px;color:var(--muted);}
+    .btn{background:var(--pink-accent);border:none;padding:8px 12px;border-radius:8px;color:white;font-weight:700;cursor:pointer;}
+    .btn:hover{opacity:.9;}
+    .navbtn{background:transparent;border:none;color:var(--text);cursor:pointer;font-weight:700;}
+
+    footer{
+      background:linear-gradient(90deg,var(--pink-light),var(--pink-accent));
+      color:white;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;
+      position:fixed;bottom:0;left:220px;right:0;box-shadow:var(--shadow);
+    }
+    footer a{color:white;text-decoration:none;font-weight:700;}
+  </style>
+</head>
+<body>
+  <header>
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkG..." alt="Logo" />
+    <div>
+      <h1>OAWL</h1>
+      <span>Organization for the Advancement of Women in Law</span>
+    </div>
+  </header>
+
+  <main>
+    <aside>
+      <nav>
+        <a href="#home" class="active" onclick="activateLink(this)">🏠 Home</a>
+        <a href="#board" onclick="activateLink(this)">👩‍💼 Executive Board</a>
+        <a href="#constitution" onclick="activateLink(this)">📜 Constitution</a>
+        <a href="#calendar" onclick="activateLink(this)">📅 Events Calendar</a>
+      </nav>
+    </aside>
+
+    <div class="content">
+      <section id="home">
+        <h2>Welcome to OAWL</h2>
+        <div class="card">
+          <p>The <strong>Organization for the Advancement of Women in Law (OAWL)</strong> promotes awareness of legal issues affecting women, fosters community among aspiring female attorneys, and connects members of Oklahoma City University School of Law with professional and networking opportunities.</p>
+        </div>
+      </section>
+
+      <section id="board">
+        <h2>Executive Board</h2>
+        <div class="grid">
+          <div class="member"><div class="avatar">RO</div><div><h4>Rachel Olivarez</h4><p>President</p></div></div>
+          <div class="member"><div class="avatar">AP</div><div><h4>Aliyah Payne</h4><p>Vice President</p></div></div>
+          <div class="member"><div class="avatar">MP</div><div><h4>Morgan Pelkie</h4><p>Secretary</p></div></div>
+          <div class="member"><div class="avatar">JH</div><div><h4>Jacey Herrington</h4><p>Treasurer</p></div></div>
+          <div class="member"><div class="avatar">RB</div><div><h4>Reaghan Briggs</h4><p>Events Coordinator</p></div></div>
+          <div class="member"><div class="avatar">TS</div><div><h4>Taysia Stephens</h4><p>Social Media Director</p></div></div>
+          <div class="member"><div class="avatar">KB</div><div><h4>Karsen Ballard</h4><p>SBA Representative</p></div></div>
+          <div class="member"><div class="avatar">CM</div><div><h4>Callyn Maxwell</h4><p>SBA Representative</p></div></div>
+        </div>
+      </section>
+
+      <section id="constitution">
+        <h2>Constitution</h2>
+        <div class="constitution">
+          <details open><summary>Preamble</summary><p>We, the members of Oklahoma City University School of Law Organization for the Advancement of Women in Law...</p></details>
+          <details><summary>Article I — Name</summary><p>The name of this organization shall be...</p></details>
+          <details><summary>Article II — Purpose</summary><ul><li>To increase interest in legal issues facing women...</li><li>To promote opportunities...</li></ul></details>
+        </div>
+      </section>
+
+      <section id="calendar">
+        <h2>Events Calendar</h2>
+        <div class="calendar">
+          <div class="month">
+            <div class="month-header">
+              <button class="navbtn" id="prevBtn">◀</button>
+              <div id="currentMonth"></div>
+              <button class="navbtn" id="nextBtn">▶</button>
+            </div>
+            <div class="month-grid" id="weekdayLabels">
+              <div class="weekday">Sun</div><div class="weekday">Mon</div><div class="weekday">Tue</div><div class="weekday">Wed</div><div class="weekday">Thu</div><div class="weekday">Fri</div><div class="weekday">Sat</div>
+            </div>
+            <div class="month-grid" id="daysGrid" style="margin-top:8px"></div>
+          </div>
+          <div class="events-list">
+            <h4>Events on <span id="selectedDateReadable">—</span></h4>
+            <div id="eventsContainer"><div class="small">Select a date to view or add events.</div></div>
+            <button class="btn" id="addEventBtn" style="margin-top:8px;">Add Event</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div><strong>OAWL</strong> | Oklahoma City University School of Law</div>
+    <a href="https://instagram.com/oawl_oculaw" target="_blank">@oawl_oculaw</a>
+  </footer>
+
+  <script>
+    function activateLink(el){
+      document.querySelectorAll("aside nav a").forEach(a=>a.classList.remove("active"));
+      el.classList.add("active");
+    }
+
+    let cur=new Date(),selectedDate=null;
+    const daysGrid=document.getElementById("daysGrid");
+    const currentMonthLabel=document.getElementById("currentMonth");
+    const selectedDateReadable=document.getElementById("selectedDateReadable");
+    const eventsContainer=document.getElementById("eventsContainer");
+    function startOfMonth(d){return new Date(d.getFullYear(),d.getMonth(),1);}
+    function endOfMonth(d){return new Date(d.getFullYear(),d.getMonth()+1,0);}
+    function formatKey(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+    function loadEvents(){return JSON.parse(localStorage.getItem("oawl_events")||"{}");}
+    function saveEvents(e){localStorage.setItem("oawl_events",JSON.stringify(e));}
+    function renderCalendar(){
+      daysGrid.innerHTML="";
+      const start=startOfMonth(cur),end=endOfMonth(cur);
+      const startDay=start.getDay(),prevEnd=new Date(cur.getFullYear(),cur.getMonth(),0).getDate();
+      currentMonthLabel.textContent=cur.toLocaleDateString(undefined,{month:"long",year:"numeric"});
+      for(let i=0;i<startDay;i++){let d=prevEnd-(startDay-1-i);let e=document.createElement("div");e.className="day other";e.innerHTML="<div class='date'>"+d+"</div>";daysGrid.appendChild(e);}
+      const evs=loadEvents();
+      for(let d=1;d<=end.getDate();d++){
+        const date=new Date(cur.getFullYear(),cur.getMonth(),d);let key=formatKey(date);
+        let el=document.createElement("div");el.className="day";el.dataset.date=key;
+        el.innerHTML="<div class='date'>"+d+"</div>";
+        if(evs[key]&&evs[key].length>0){el.innerHTML+="<div class='event-dot'></div>";}
+        el.onclick=()=>selectDate(date);
+        daysGrid.appendChild(el);
+      }
+      let total=daysGrid.children.length;let need=(7-(total%7))%7;
+      for(let i=1;i<=need;i++){let el=document.createElement("div");el.className="day other";el.innerHTML="<div class='date'>"+i+"</div>";daysGrid.appendChild(el);}
+    }
+    function selectDate(d){
+      selectedDate=d;let key=formatKey(d);
+      selectedDateReadable.textContent=d.toDateString();
+      renderEventsFor(key);
+      document.querySelectorAll(".day").forEach(e=>e.style.boxShadow=e.dataset.date===key?"0 0 0 2px var(--pink-accent)":"none");
+    }
+    function renderEventsFor(key){
+      const evs=loadEvents(),list=evs[key]||[];
+      eventsContainer.innerHTML="";
+      if(list.length===0){eventsContainer.innerHTML="<div class='small'>No events. Click Add Event.</div>";return;}
+      list.forEach((ev,i)=>{
+        const div=document.createElement("div");div.className="event-item";
+        div.innerHTML="<strong>"+ev.title+"</strong> <div class='small'>"+(ev.time||"")+"</div><div class='small'>"+(ev.desc||"")+"</div><button class='navbtn' onclick='deleteEvent(\""+key+"\","+i+")'>Delete</button>";
+        eventsContainer.appendChild(div);
+      });
+    }
+    function deleteEvent(key,i){
+      const evs=loadEvents();evs[key].splice(i,1);if(evs[key].length===0)delete evs[key];
+      saveEvents(evs);renderCalendar();renderEventsFor(key);
+    }
+    document.getElementById("prevBtn").onclick=()=>{cur=new Date(cur.getFullYear(),cur.getMonth()-1,1);renderCalendar();};
+    document.getElementById("nextBtn").onclick=()=>{cur=new Date(cur.getFullYear(),cur.getMonth()+1,1);renderCalendar();};
+    document.getElementById("addEventBtn").onclick=()=>{
+      if(!selectedDate){alert("Select a date first.");return;}
+      const title=prompt("Event title:"); if(!title) return;
+      const time=prompt("Time (optional):"); const desc=prompt("Description (optional):");
+      const key=formatKey(selectedDate); const evs=loadEvents(); if(!evs[key]) evs[key]=[];
+      evs[key].push({title,time,desc}); saveEvents(evs); renderCalendar(); renderEventsFor(key);
+    };
+    renderCalendar(); selectDate(new Date());
+  </script>
+</body>
+</html>
