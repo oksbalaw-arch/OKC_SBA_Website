@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Health Law Association | OCU Law</title>
+<style>
+  :root{
+    --blue1:#a8e4ff;      /* sky gradient start */
+    --blue2:#5cb8ff;      /* sky gradient end   */
+    --accent:#00b894;     /* green hover        */
+    --text:#023047;
+    --card:#ffffff;
+    --muted:#f2f7fb;
+    --sidebar-w:270px;
+    --maxw:1100px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Georgia Pro',Georgia,'Times New Roman',serif;}
+
+  body{
+    min-height:100vh;
+    background:linear-gradient(135deg,var(--blue1),var(--blue2));
+    color:var(--text);
+    display:flex;
+  }
+
+  /* ===== Fixed Left Sidebar ===== */
+  .sidebar{
+    position:fixed; inset:0 auto 0 0; width:var(--sidebar-w);
+    background:#ffffff;
+    border-right:1px solid #e6eef6;
+    box-shadow:2px 0 20px rgba(0,0,0,.06);
+    display:flex; flex-direction:column; align-items:center;
+    padding:18px 14px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; margin-bottom:12px; text-decoration:none; color:var(--text);}
+  .brand img{width:54px; height:auto; border-radius:8px; background:#fff; padding:4px;}
+  .brand span{font-weight:700; font-size:1.15rem; text-transform:capitalize; letter-spacing:.3px;}
+
+  .tabs{margin-top:10px; width:100%; display:flex; flex-direction:column; gap:8px;}
+  .tab{
+    display:block; width:100%;
+    text-decoration:none; color:var(--text);
+    background:var(--muted);
+    border:1px solid #e1edf6;
+    padding:10px 12px; border-radius:10px;
+    transition:background .2s, transform .03s;
+  }
+  .tab:hover{background:#e6f5ff}
+  .tab.active{background:#d7f4ea; border-color:#c9ecd0}
+
+  /* ===== Main area ===== */
+  .main{
+    margin-left:var(--sidebar-w);
+    width:calc(100% - var(--sidebar-w));
+    min-height:100vh;
+    display:flex; flex-direction:column;
+  }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:28px auto;
+    padding:0 18px;
+    width:100%;
+  }
+  .card{
+    background:var(--card);
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    padding:28px;
+  }
+  .card h1{color:#006aa6; font-size:2rem; margin-bottom:10px;}
+  .card p{font-size:1.05rem; line-height:1.7; margin:10px 0 6px;}
+
+  /* Board grid */
+  .board{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; margin-top:10px;}
+  .member{background:#fff; border:1px solid #eef4f9; border-radius:12px; padding:16px; text-align:center;}
+  .member img{width:100%; height:auto; border-radius:10px; cursor:zoom-in;}
+  .member h3{color:#006aa6; margin-top:10px; font-size:1.1rem;}
+  .member p{margin-top:4px; font-size:.96rem;}
+
+  /* Home logo */
+  .ocu-logo{display:block; margin:22px auto 4px; width:260px; max-width:90%; height:auto;}
+
+  /* Socials image + clickable halves */
+  .socials-wrap{position:relative; max-width:800px; margin:12px auto 0;}
+  .socials-img{width:100%; height:auto; border-radius:12px; box-shadow:0 8px 22px rgba(0,0,0,.12);}
+  .hotspot{position:absolute; top:0; height:100%; width:50%; text-indent:-9999px;}
+  .hotspot.left{left:0;}  .hotspot.right{right:0;}
+
+  /* Footer */
+  footer{max-width:var(--maxw); margin:0 auto 28px; border-radius:12px;
+         background:linear-gradient(90deg,var(--blue1),var(--blue2)); color:#fff;
+         text-align:center; padding:10px 16px;}
+
+  /* ===== Smooth Zoom (Lightbox) ===== */
+  .zoom-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.55);
+    display:none; cursor:zoom-out; z-index:1000;
+  }
+  .zoom-overlay.active{display:block;}
+  .zoom-img{
+    position:fixed; z-index:1001; border-radius:12px; box-shadow:0 18px 45px rgba(0,0,0,.35);
+    transition:transform .35s ease, top .35s ease, left .35s ease, width .35s ease, height .35s ease, border-radius .35s ease;
+    object-fit:contain; background:#fff;
+  }
+
+  @media (max-width:760px){
+    :root{ --sidebar-w:220px; }
+    .brand span{font-size:1rem}
+  }
+</style>
+</head>
+<body>
+
+  <!-- Sidebar (fixed) -->
+  <aside class="sidebar">
+    <a class="brand" href="#" onclick="route('home'); setActive(null);">
+      <img src="HLA Logo.png" alt="HLA Logo"><span>Health Law Association</span>
+    </a>
+    <nav class="tabs">
+      <a class="tab" href="#" onclick="route('home'); setActive(this)">Home</a>
+      <a class="tab" href="#" onclick="route('calendar'); setActive(this)">Calendar</a>
+      <a class="tab" href="#" onclick="route('documents'); setActive(this)">Documents</a>
+      <a class="tab" href="#" onclick="route('board'); setActive(this)">Meet the Board</a>
+      <a class="tab" href="#" onclick="route('previous'); setActive(this)">Previous Meetings</a>
+      <a class="tab" href="#" onclick="route('merch'); setActive(this)">Merch Sale</a>
+      <a class="tab" href="#" onclick="route('contact'); setActive(this)">Contact Us</a>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <div class="main">
+    <main class="wrap">
+      <section id="view" class="card">
+        <!-- Home default -->
+        <h1>Welcome to the Health Law Association!</h1>
+        <p>We’re the student-led organization at OCU Law that explores the intersection of law and healthcare. Check out our calendar, meet our board, and get involved!</p>
+        <a href="https://law.okcu.edu" target="_blank" rel="noopener">
+          <img src="OCULawLogo.webp" class="ocu-logo" alt="Oklahoma City University School of Law Logo">
+        </a>
+      </section>
+    </main>
+    <footer>© 2025 Health Law Association | Oklahoma City University School of Law</footer>
+  </div>
+
+<!-- Zoom overlay container (for smooth zoom animation) -->
+<div class="zoom-overlay" id="zoomOverlay" aria-hidden="true"></div>
+
+<script>
+  function setActive(link){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    if(link) link.classList.add('active');
+  }
+
+  function route(section){
+    const v = document.getElementById('view');
+
+    if(section==='home'){
+      v.innerHTML = `
+        <h1>Welcome to the Health Law Association!</h1>
+        <p>We’re the student-led organization at OCU Law that explores the intersection of law and healthcare. Check out our calendar, meet our board, and get involved!</p>
+        <a href="https://law.okcu.edu" target="_blank" rel="noopener">
+          <img src="OCULawLogo.webp" class="ocu-logo" alt="Oklahoma City University School of Law Logo">
+        </a>`;
+    }
+    else if(section==='calendar'){
+      v.innerHTML = `
+        <h1>📅 Calendar</h1>
+        <p>Mark your calendar for our upcoming items:</p>
+        <ul style="list-style:none;padding-left:0;line-height:1.9;margin-top:8px">
+          <li>🗓 <strong>Sept 17, 2025</strong> — First General Meeting (Room 204, 12:00 PM)</li>
+          <li>🎙 <strong>Health Law Attorney Panel</strong> — <em>TBD</em></li>
+          <li>🎁 <strong>Finals Care Packages</strong> — <em>TBD</em></li>
+          <li>⛳️ <strong>Golf Tournament</strong> — <em>Coming in Spring!</em></li>
+        </ul>`;
+    }
+    else if(section==='documents'){
+      v.innerHTML = `
+        <h1>📄 Documents</h1>
+        <p>Official governing documents for HLA:</p>
+        <p style="margin-top:10px">
+          <a href="HEALTH LAW ASSOCIATION CONSTITUTION AND BYLAWS.docx" download target="_blank" rel="noopener">📘 Download HLA Constitution &amp; Bylaws</a>
+        </p>`;
+    }
+    else if(section==='board'){
+      v.innerHTML = `
+        <h1>👥 Meet the Board</h1>
+        <div class="board" id="boardGrid">
+          <div class="member"><img src="Pres.Brea.png" alt="Breanne Bittick"><h3>Breanne Bittick</h3><p>President</p></div>
+          <div class="member"><img src="VP.Chloe.png" alt="Chloe Frame"><h3>Chloe Frame</h3><p>Vice President</p></div>
+          <div class="member"><img src="Tre.Caleb.png" alt="Caleb Frank"><h3>Caleb Frank</h3><p>Treasurer</p></div>
+          <div class="member"><img src="Sec.Alyssa.png" alt="Alyssa Abraham"><h3>Alyssa Abraham</h3><p>Secretary</p></div>
+        </div>`;
+      attachBoardZoomHandlers();
+    }
+    else if(section==='previous'){
+      v.innerHTML = `
+        <h1>🗂 Previous Meetings</h1>
+        <div class="card" style="border:none;padding:0;margin:12px 0 0">
+          <h3 style="margin-bottom:8px">PowerPoints</h3>
+          <p><a href="HLA Meeting.pdf" download target="_blank" rel="noopener">General Meeting 9/17/25 — Download PDF</a></p>
+        </div>`;
+    }
+    else if(section==='merch'){
+      v.innerHTML = `
+        <h1>🛍 Merch Sale</h1>
+        <p><strong>Coming soon!</strong></p>`;
+    }
+    else if(section==='contact'){
+      v.innerHTML = `
+        <h1>✉️ Contact Us</h1>
+        <p><strong>Contact:</strong> Breanne Bittick — President</p>
+        <p><strong>Email:</strong> <a href="mailto:bbittick@my.okcu.edu">bbittick@my.okcu.edu</a></p>
+        <p style="margin-top:14px">Scan or tap below to join our socials:</p>
+
+        <div class="socials-wrap">
+          <img src="HLASocials.png" class="socials-img" alt="Join our socials: Instagram and GroupMe QR codes">
+          <!-- Left half → Instagram -->
+          <a class="hotspot left" href="https://instagram.com/ocu_hla" target="_blank" rel="noopener" title="Open Instagram @ocu_hla">Instagram</a>
+          <!-- Right half → GroupMe (replace with your direct invite link if you have one) -->
+          <a class="hotspot right" href="https://groupme.com/join_group" target="_blank" rel="noopener" title="Open GroupMe">GroupMe</a>
+        </div>`;
+    }
+
+    // reset scroll to top of main card
+    document.querySelector('.main').scrollTop = 0;
+  }
+
+  /* ===== Smooth Zoom Logic ===== */
+  const overlay = document.getElementById('zoomOverlay');
+  let activeClone = null;
+
+  function attachBoardZoomHandlers(){
+    document.querySelectorAll('#boardGrid .member img').forEach(img=>{
+      img.addEventListener('click', ()=>zoomImageFromThumb(img));
+    });
+  }
+
+  function zoomImageFromThumb(img){
+    // Get bounds of the thumbnail
+    const rect = img.getBoundingClientRect();
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    const scrollX = window.scrollX || document.documentElement.scrollLeft;
+
+    // Create a clone to animate
+    const clone = img.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.className = 'zoom-img';
+    clone.style.top = (rect.top + scrollY) + 'px';
+    clone.style.left = (rect.left + scrollX) + 'px';
+    clone.style.width = rect.width + 'px';
+    clone.style.height = rect.height + 'px';
+    clone.style.borderRadius = window.getComputedStyle(img).borderRadius;
+
+    document.body.appendChild(clone);
+    activeClone = clone;
+
+    // Show overlay
+    overlay.classList.add('active');
+    overlay.setAttribute('aria-hidden','false');
+
+    // Force reflow then animate to centered large size
+    requestAnimationFrame(()=>{
+      const viewportW = window.innerWidth;
+      const viewportH = window.innerHeight;
+
+      // Target size (fit within viewport with margins)
+      const margin = 32;
+      const targetW = Math.min(viewportW - margin*2, 900);
+      const aspect = rect.width / rect.height;
+      const targetH = Math.min(viewportH - margin*2, targetW / aspect);
+
+      const top = (window.scrollY + (viewportH - targetH)/2);
+      const left = (window.scrollX + (viewportW - targetW)/2);
+
+      clone.style.top = top + 'px';
+      clone.style.left = left + 'px';
+      clone.style.width = targetW + 'px';
+      clone.style.height = targetH + 'px';
+      clone.style.borderRadius = '14px';
+    });
+  }
+
+  function closeZoom(){
+    if(!activeClone) return;
+    // Animate back to fade-out scale instead of snapping to the exact thumb
+    activeClone.style.transform = 'scale(.96)';
+    activeClone.style.opacity = '0';
+    setTimeout(()=>{
+      if(activeClone && activeClone.parentNode){ activeClone.parentNode.removeChild(activeClone); }
+      activeClone = null;
+    }, 250);
+
+    overlay.classList.remove('active');
+    overlay.setAttribute('aria-hidden','true');
+  }
+
+  overlay.addEventListener('click', closeZoom);
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeZoom(); });
+
+  // default view
+  route('home');
+  // highlight Home tab initially
+  document.querySelectorAll('.tab')[0].classList.add('active');
+</script>
+</body>
+</html>
