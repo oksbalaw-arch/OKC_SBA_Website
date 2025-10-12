@@ -1,0 +1,300 @@
+/* ================================
+   OCU LAW | IPLS Website Styles
+   Theme: Cosmic Highways Edition
+   ================================ */
+
+/* --- Global Typography & Background --- */
+html, body {
+  background-color: #070a16; /* fallback tone */
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  line-height: 1.6;
+  color: #e8edf5;
+  margin: 0;
+
+  /* Background image: Cosmic Highways */
+  background:
+    linear-gradient(rgba(5, 10, 25, 0.85), rgba(5, 10, 25, 0.85)),
+    url("Cosmic-Highways.jpg") center center / cover no-repeat fixed;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: lighten;
+  animation: cosmicDrift 240s ease-in-out infinite alternate;
+  overflow-x: hidden;
+}
+
+/* Subtle animated cosmic drift */
+@keyframes cosmicDrift {
+  0% {
+    background-position: center center;
+  }
+  50% {
+    background-position: center 55%;
+  }
+  100% {
+    background-position: center center;
+  }
+}
+
+/* --- Aurora shimmer overlay (optional artistic glow) --- */
+.aurora-shimmer {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(150, 200, 255, 0.05),
+    rgba(255, 200, 250, 0.08),
+    rgba(180, 255, 230, 0.05)
+  );
+  background-size: 400% 400%;
+  mix-blend-mode: overlay;
+  animation: auroraFlow 90s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes auroraFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* --- Banner --- */
+.club-banner {
+  position: relative;
+  text-align: center;
+  padding: 3rem 0;
+  background: rgba(10, 10, 25, 0.65);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
+}
+
+.club-banner h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0;
+  background: linear-gradient(90deg, #b3a8ff, #9ad8ff, #ffd6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 40px rgba(160, 160, 255, 0.15);
+}
+
+.club-banner h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #d8dbff;
+  opacity: 0.9;
+  margin-top: 1rem;
+}
+
+/* --- Layout --- */
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  flex: 1 1 220px;
+  max-width: 250px;
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 0.9rem;
+}
+
+.sidebar a {
+  color: #d8d6ff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar a:hover {
+  color: #ffd4f8;
+  transform: translateX(4px);
+}
+
+/* --- Main Card --- */
+.card {
+  flex: 3 1 700px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(15px);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.card h1, .card h2, .card h3 {
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+}
+
+.card p, .card li {
+  color: #e4e6ef;
+}
+
+/* --- Executive Board Grid --- */
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.board-card {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.board-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.board-card h3 {
+  font-size: 1.2rem;
+  color: #e8e4ff;
+}
+
+.board-card .role {
+  font-weight: 600;
+  color: #c8baff;
+  margin-bottom: 0.5rem;
+}
+
+.board-card .chip {
+  display: inline-block;
+  background: rgba(220, 210, 255, 0.2);
+  color: #f4f2ff;
+  border-radius: 50px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.8rem;
+  margin-right: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+/* --- Advisor Section (Improved Spacing & Readability) --- */
+.advisor {
+  margin-top: 4rem;              /* more space above */
+  padding: 2rem 0 3.5rem 0;      /* padding top/bottom for breathing room */
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: grid;
+  grid-template-columns: 1.2fr 2.8fr;
+  gap: 2rem;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.advisor h2.footer-heading {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: #eae8ff;
+  margin-bottom: 0.8rem;
+}
+
+.advisor h3 {
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+}
+
+.advisor p {
+  color: #e4e6ef;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .advisor {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 1rem 3rem 1rem;
+  }
+}
+
+
+.footer-heading {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: #d9d8ff;
+  margin-bottom: 1rem;
+}
+
+/* --- Footer --- */
+.site-footer {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 3rem;
+}
+
+.site-footer .footer-inner p {
+  font-family: "Lato", sans-serif;
+  color: #d7daef;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+    padding: 2rem 1rem;
+  }
+
+  .sidebar {
+    max-width: 100%;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .club-banner h1 {
+    font-size: 2.6rem;
+  }
+
+  .club-banner h2 {
+    font-size: 1.1rem;
+  }
+}
