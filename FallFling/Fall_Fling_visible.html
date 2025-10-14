@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fall Fling</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Eater&family=Roboto:wght@400;700&display=swap');
+    body { margin:0; font-family:'Roboto',sans-serif; background:#1a1023; color:#f6e6c9; text-align:center; overflow-x:hidden; }
+    .banner {
+      background:linear-gradient(135deg,#ff6a00,#ffb85c); color:#2b0d10; padding:50px 20px;
+      font-family:'Eater',cursive; font-size:4em; letter-spacing:2px; border-bottom:5px solid #ffb85c;
+      text-shadow:0 0 10px #ffb85c,0 0 20px #ff9c4a,0 0 40px #ff6a00,0 0 60px #ffb85c;
+      animation:glow 2.5s ease-in-out infinite alternate; transition:.3s;
+    }
+    @keyframes glow {
+      from { text-shadow:0 0 5px #ffb85c,0 0 15px #ff9c4a,0 0 30px #ff6a00; }
+      to   { text-shadow:0 0 20px #ffe6b3,0 0 40px #ffd280,0 0 80px #ffb85c,0 0 100px #ff9c4a; }
+    }
+    .layout { flex-direction:row; justify-content:center; align-items:flex-start; gap:60px; padding:60px 10%; animation:fadeIn 1s ease forwards; }
+    .left-column,.right-column { flex:1; max-width:600px; }
+    .left-column img { width:100%; border:4px solid #ffb85c; border-radius:16px; box-shadow:0 0 30px rgba(255,184,92,.5); }
+    .right-column { background:rgba(50,33,66,.9); padding:40px; border-radius:16px; box-shadow:0 0 30px rgba(255,184,92,.3); text-align:left; line-height:1.8; font-size:1.1em; }
+    .button {
+      background:#ffb85c; color:#2b1839; font-size:1.3em; padding:15px 35px; border:none; border-radius:10px; text-decoration:none; font-weight:700;
+      transition:.3s; box-shadow:0 0 25px rgba(255,184,92,.7),0 0 50px rgba(255,184,92,.5); margin-top:25px; display:inline-block; text-align:center;
+    }
+    .button:hover { background:#ffe1b5; box-shadow:0 0 35px rgba(255,200,140,.8); transform:scale(1.05); }
+    @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+    @media (max-width:900px){ .layout{flex-direction:column; align-items:center;} .right-column{text-align:center;} }
+  </style>
+</head>
+<body>
+  <div class="banner" id="banner">🎃 Fall Fling 🎃</div>
+  <div class="layout" style="display:flex" id="layout">
+    <div class="left-column">
+      <img src="IMG_3646.JPG" alt="Fall Fling Flyer" />
+    </div>
+    <div class="right-column">
+      <p><strong>It’s official!</strong> Tickets for <em>Fall Fling</em> are live!
+         This event will take place <strong>October 24, 9pm</strong> at <strong>Yours Truly</strong>
+         and all proceeds will go to the <strong>3L class!</strong></p>
+      <p>The event will be <strong>private from 9–11pm</strong>, and at 11 we’ll have the “Mezzanine” upstairs
+         area private to ourselves — complete with a <strong>bar, bathroom, and DJ</strong> — so you only have
+         to go downstairs if you want!</p>
+      <p><strong>The first 100 people</strong> will receive a <strong>free drink ticket!</strong></p>
+      <p>Though this isn’t technically on Halloween, <strong>costumes are preferred</strong> and the venue will be
+         <strong>decked out for Halloween!</strong></p>
+      <a class="button" href="https://near.tl/sm/Qf9eb_wxP" target="_blank" rel="noopener">👻 Buy Tickets Here! 👻</a>
+    </div>
+  </div>
+
+</body>
+</html>
