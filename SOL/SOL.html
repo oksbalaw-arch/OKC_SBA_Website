@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Society of Litigators</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      margin: 0;
+      background-color: #f5f2ec;
+      color: #2e2b23;
+    }
+    header {
+      background-color: #3b2f2f;
+      color: white;
+      padding: 20px 40px;
+      text-align: center;
+    }
+    header h1 { margin: 0; font-size: 2.5em; letter-spacing: 1px; }
+    nav {
+      background-color: #5c4438;
+      text-align: center;
+      padding: 10px 0;
+    }
+    nav a {
+      color: #f5f2ec;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section { padding: 30px 40px; }
+    h2 { border-bottom: 2px solid #3b2f2f; padding-bottom: 10px; }
+    .calendar-section { max-width: 600px; margin: auto; }
+
+    /* event list */
+    ul#eventList { list-style: none; padding-left: 0; }
+    ul#eventList li {
+      background-color: #e2ddd4;
+      margin: 10px 0;
+      padding: 10px;
+      border-left: 5px solid #5c4438;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+    .event-date {
+      font-weight: bold;
+      min-width: 70px;
+      color: #3b2f2f;
+    }
+    .event-name {
+      flex: 1;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #3b2f2f;
+      color: white;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    /* small screen tweaks */
+    @media (max-width: 480px) {
+      ul#eventList li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .event-date {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Society of Litigators</h1>
+    <p>Preparing Tomorrow's Advocates</p>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#calendar">Calendar</a>
+    <a href="#constitution">Constitution</a>
+  </nav>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>
+      The Society of Litigators is a student-run organization dedicated to developing the courtroom skills
+      of future advocates. Through workshops, mock trials, guest speakers, and competitions, we prepare law
+      students for the art and practice of litigation.
+    </p>
+  </section>
+
+  <section id="constitution">
+    <h2>Constitution</h2>
+    <p>
+      Constitution of the Society of Litigators
+    </p>
+    <a href="constitutionSOL.pdf" target="_blank"> View the Constitution (PDF)</a>
+  </section>
+
+  <section id="calendar" class="calendar-section">
+    <h2>Upcoming Events</h2>
+
+    <!-- Read-only list of events populated from JSON below -->
+    <ul id="eventList"></ul>
+
+    <p style="font-size:0.9em; color:#5c4438; text-align:center; margin-top:20px;">
+      For updates, contact club leadership.
+    </p>
+  </section>
+
+  <footer>
+    &copy; 2025 Society of Litigators. All rights reserved.
+  </footer>
+
+  <script>
+    // Webmaster-editable event data:
+    // Just change this list and re-upload the file to update the calendar.
+    const events = [
+      { date: "10/27", name: "I Scream for Ice Cream fundraiser" },
+      { date: "10/30", name: "Meeting" }
+    ];
+
+    // Render events into <ul id="eventList">
+    const eventList = document.getElementById('eventList');
+
+    function renderEvents(list) {
+      eventList.innerHTML = ""; // clear existing
+      list.forEach(evt => {
+        const li = document.createElement('li');
+
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'event-date';
+        dateSpan.textContent = evt.date;
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'event-name';
+        nameSpan.textContent = evt.name;
+
+        li.appendChild(dateSpan);
+        li.appendChild(nameSpan);
+        eventList.appendChild(li);
+      });
+    }
+
+    renderEvents(events);
+  </script>
+</body>
+</html>
