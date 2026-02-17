@@ -1,15 +1,14 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SBA — Student Bar Association</title>
-  <meta name="description"
-    content="Student Bar Association hub: constitution, bylaws, schedules, resources, and forms." />
+  <meta name="description" content="Student Bar Association hub: constitution, bylaws, schedules, resources, and forms." />
   <link rel="icon" href="data:," />
   <!-- Reuse your existing site stylesheet -->
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
     /* Page-local layout only (builds on your styles.css variables) */
     .sba-shell {
@@ -17,42 +16,34 @@
       margin-inline: auto;
       padding: 1rem;
     }
-
     .sba-banner {
       display: grid;
       place-items: center;
       margin: .5rem 0 1rem;
     }
-
     .sba-banner img {
       width: min(960px, 95vw);
       height: auto;
       border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, .55), inset 0 0 0 1px rgba(255, 255, 255, .04);
-      outline: 1px solid rgba(255, 255, 255, .04);
+      box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.04);
+      outline: 1px solid rgba(255,255,255,.04);
     }
-
     .sba-layout {
       display: grid;
       grid-template-columns: clamp(200px, 22vw, 280px) 1fr;
       gap: 1rem;
       align-items: start;
     }
-
-    .sba-sidebar .card {
-      padding: 0;
-    }
-
+    .sba-sidebar .card { padding: 0; }
     .sba-sidebar h2 {
       margin: 0;
       padding: .9rem 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, .08);
+      border-bottom: 1px solid rgba(255,255,255,.08);
       font-size: 1rem;
       letter-spacing: .4px;
       color: var(--muted);
       text-transform: uppercase;
     }
-
     .sba-nav {
       list-style: none;
       margin: 0;
@@ -60,49 +51,40 @@
       display: grid;
       gap: .35rem;
     }
-
     .sba-nav a {
       display: block;
       text-decoration: none;
       color: var(--link);
-      border: 1px solid rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255,255,255,.06);
       border-radius: .6rem;
       padding: .55rem .7rem;
-      background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
     }
-
-    .sba-nav a:hover {
-      border-color: var(--ring);
-      background: rgba(255, 255, 255, .045);
-    }
-
-    .sba-content .card {
-      min-height: 320px;
-    }
-
-    .sba-content h1 {
-      margin: .2rem 0 .4rem;
-    }
-
-    .sba-muted {
-      color: var(--muted);
-    }
+    .sba-nav a:hover { border-color: var(--ring); background: rgba(255,255,255,.045); }
+    .sba-content .card { min-height: 320px; }
+    .sba-content h1 { margin: .2rem 0 .4rem; }
+    .sba-muted { color: var(--muted); }
 
     @media (max-width: 900px) {
-      .sba-layout {
-        grid-template-columns: 1fr;
-      }
+      .sba-layout { grid-template-columns: 1fr; }
+    }
+
+    /* --- Fix for footer overlap --- */
+    :root { --footerh: 56px; } /* adjust if your footer is taller/shorter */
+    .sba-shell { padding-bottom: calc(var(--footerh) + 12px); }
+
+    /* make sidebar scroll if it’s too tall */
+    .sba-sidebar .card {
+      max-height: calc(100vh - 320px);
+      overflow: auto;
     }
   </style>
 </head>
-
 <body>
   <main class="sba-shell" aria-label="SBA site">
     <!-- Top banner -->
     <div class="sba-banner">
-      <a href="https://www.eventbrite.com/e/2026-barristers-ball-night-in-athens-tickets-1982036079268" target="_blank">
-        <img src="BarristersBall26.png" alt="Barristers Ball 2026" loading="eager" />
-      </a>
+      <img src="sba-banner.png" alt="Student Bar Association banner" loading="eager" />
     </div>
 
     <!-- Two-column layout: sidebar + main -->
@@ -112,11 +94,12 @@
         <div class="card">
           <h2>SBA Pages</h2>
           <ul class="sba-nav" role="list">
+            <li><a href="index.html">🏠 Home</a></li>
             <li><a href="sba-constitution.html" data-section="constitution">SBA Constitution</a></li>
             <li><a href="sba-bylaws.html" data-section="bylaws">By Laws</a></li>
             <li><a href="sba-schedule.html" data-section="schedule">Schedule</a></li>
             <li><a href="sba-resources.html" data-section="resources">Student Resources</a></li>
-            <li><a href="sba-forms.html" data-section="forms">Fillable Forms</a></li>
+            <li><a href="#" data-section="forms">Fillable Forms</a></li>
           </ul>
         </div>
       </aside>
@@ -131,6 +114,7 @@
             for each section; for now you can preview summaries right here.
           </p>
           <ul class="sba-muted">
+            <li><strong>Home</strong></li>
             <li><strong>SBA Constitution</strong> — foundational charter and mission.</li>
             <li><strong>By Laws</strong> — operating procedures and rules.</li>
             <li><strong>Schedule</strong> — meetings, events, and deadlines.</li>
@@ -165,12 +149,20 @@
       constitution: {
         title: "SBA Constitution",
         body: `Our constitution outlines the SBA's purpose, membership, officers, elections,
-               and duties. It serves as the foundation for governance and accountability.`
+       and duties. It serves as the foundation for governance and accountability.
+
+       <br><br>
+       <a href="SBA Constitution 2021.pdf" download>Download the SBA Constitution (2023, PDF)</a>`
       },
       bylaws: {
         title: "SBA By Laws",
         body: `By laws detail procedures: meetings, quorums, committees, finance, and amendments.
-               They work alongside the Constitution to guide operations.`
+               They work alongside the Constitution to guide operations.
+
+               <br><br>
+               <a href="Bylaws (2023).pdf" download>📄 Download the SBA Bylaws (2023, PDF)</a>
+               <br>
+               <a href="Election Regulations (2023).pdf" download>📄 Download the Election Regulations (2023, PDF)</a>`
       },
       schedule: {
         title: "SBA Schedule",
@@ -185,7 +177,11 @@
       forms: {
         title: "Fillable Forms",
         body: `Funding and reimbursement forms, event approvals, space requests, and other
-               administrative documents to streamline student org needs.`
+               administrative documents to streamline student org needs.
+
+               <br><br>
+               <a href="Student Fillable Expense.pdf" download> Download the Student Fillable Expense Form (PDF)</a> <br>
+               <a href="2025-2026 Budget Request Form.docx" download>Download the SBA Budget Request Form (2025-2026, docx)</a>`
       }
     };
 
@@ -198,8 +194,6 @@
         c.innerHTML = `
           <h1>${previews[key].title}</h1>
           <p class="sba-muted">${previews[key].body}</p>
-          <p class="sba-muted">A full page for <strong>${previews[key].title}</strong> is coming soon.
-          You'll be able to view/download documents and details there.</p>
         `;
         // Optionally update the URL hash for direct linking:
         history.replaceState(null, "", "#" + key);
@@ -214,5 +208,4 @@
     }
   </script>
 </body>
-
 </html>
